@@ -17,6 +17,9 @@ in
       plugins = lib.mkEnableOption "plugins" // {
         description = "Whether to byte compile lua plugins.";
       };
+      nvimRuntime = lib.mkEnableOption "nvimRuntime" // {
+        description = "Whether to byte compile lua files in Nvim runtime.";
+      };
     };
 
     combinePlugins = {
