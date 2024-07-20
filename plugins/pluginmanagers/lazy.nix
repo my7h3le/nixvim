@@ -13,6 +13,11 @@ let
   processPlugin =
     plugin:
     let
+      hasNonNullAttr = str: attrs: (builtins.hasAttr str attrs) && (attrs."${str}" != null);
+      hasNonNullPackages = plugin: hasNonNullAttr "packages" plugin;
+      hasNonNullDependencies = plugin: hasNonNullAttr "dependencies" plugin;
+      hasNameAndPathAttrs = attrSet: (attrSet ? name) && (attrSet ? path);
+
       mkEntryFromDrv =
         p:
         if lib.isDerivation p then
@@ -20,18 +25,22 @@ let
             name = "${lib.getName p}";
             path = p;
           }
+        else if hasNameAndPathAttrs p then
+          {
+            name = p.name;
+            path = p.path;
+          }
         else
           {
             name = "${lib.getName p.pkg}";
             path = p.pkg;
           };
+      processPackages =
+        if hasNonNullPackages plugin then builtins.concatMap processPlugin plugin.packages else [ ];
       processDependencies =
-        if plugin ? dependencies && plugin.dependencies != null then
-          builtins.concatMap processPlugin plugin.dependencies
-        else
-          [ ];
+        if hasNonNullDependencies plugin then builtins.concatMap processPlugin plugin.dependencies else [ ];
     in
-    [ (mkEntryFromDrv plugin) ] ++ processDependencies;
+    [ (mkEntryFromDrv plugin) ] ++ processPackages ++ processDependencies;
 
   processedPlugins = builtins.concatLists (builtins.map processPlugin lazyPlugins);
   lazyPath = pkgs.linkFarm "lazy-plugins" processedPlugins;
@@ -77,6 +86,8 @@ in
                 then this plugin will not be loaded. Useful to disable some plugins in vscode,
                 or firenvim for example. (accepts fun(LazyPlugin):boolean)
               '';
+
+              packages = helpers.mkNullOrOption (helpers.nixvimTypes.eitherRecursive types.package listOfPackages) "Additional packages to be made available in the `lazy-plugins` path";
 
               dependencies = helpers.mkNullOrOption (helpers.nixvimTypes.eitherRecursive str listOfPlugins) "Plugin dependencies";
 
@@ -142,6 +153,7 @@ in
             };
           });
 
+          listOfPackages = types.listOf (helpers.nixvimTypes.eitherRecursive types.package types.attrs);
           listOfPlugins = types.listOf pluginType;
         in
         mkOption {
