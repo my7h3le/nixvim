@@ -254,14 +254,14 @@ in
         packedPlugins = if length plugins == 1 then head plugins else plugins;
       in
       mkIf (cfg.plugins != [ ]) ''
-        require('lazy').setup(
-          {
+        require('lazy').setup({
+            ${helpers.toLuaObject cfg.setup},
             dev = {
               path = "${lazyPath}",
               patterns = {"."},
               fallback = false
             },
-            spec = ${helpers.toLuaObject packedPlugins}
+            spec = ${helpers.toLuaObject packedPlugins},
           }
         )
       '';
