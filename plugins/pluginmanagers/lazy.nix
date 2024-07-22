@@ -62,17 +62,17 @@ in
         type = lib.types.submodule {
           freeformType = with types; attrsOf anything;
 
-        #   # Declare an option for the port such that the type is checked and this option
-        #   # is shown in the manual.
-        #   options.port = lib.mkOption {
-        #     type = lib.types.port;
-        #     default = 8080;
-        #     description = ''
-        #       Which port this service should listen on.
-        #     '';
-        #   };
-        #
-        # };
+          #   # Declare an option for the port such that the type is checked and this option
+          #   # is shown in the manual.
+          #   options.port = lib.mkOption {
+          #     type = lib.types.port;
+          #     default = 8080;
+          #     description = ''
+          #       Which port this service should listen on.
+          #     '';
+          #   };
+          #
+        };
         default = { };
         # Add upstream documentation to the settings description
         description = ''
