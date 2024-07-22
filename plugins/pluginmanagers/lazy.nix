@@ -58,6 +58,30 @@ in
     plugins.lazy = {
       enable = mkEnableOption "lazy.nvim";
 
+      setup = lib.mkOption {
+        type = lib.types.submodule {
+          freeformType = with types; attrsOf anything;
+
+        #   # Declare an option for the port such that the type is checked and this option
+        #   # is shown in the manual.
+        #   options.port = lib.mkOption {
+        #     type = lib.types.port;
+        #     default = 8080;
+        #     description = ''
+        #       Which port this service should listen on.
+        #     '';
+        #   };
+        #
+        # };
+        default = { };
+        # Add upstream documentation to the settings description
+        description = ''
+          Configuration for Foo, see
+          <link xlink:href="https://example.com/docs/foo"/>
+          for supported values.
+        '';
+      };
+
       plugins =
         with types;
         let
