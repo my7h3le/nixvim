@@ -59,20 +59,7 @@ in
       enable = mkEnableOption "lazy.nvim";
 
       setup = lib.mkOption {
-        type = lib.types.submodule {
-          freeformType = with types; attrsOf anything;
-
-          #   # Declare an option for the port such that the type is checked and this option
-          #   # is shown in the manual.
-          #   options.port = lib.mkOption {
-          #     type = lib.types.port;
-          #     default = 8080;
-          #     description = ''
-          #       Which port this service should listen on.
-          #     '';
-          #   };
-          #
-        };
+        type = lib.types.submodule { freeformType = with types; attrsOf anything; };
         default = { };
         # Add upstream documentation to the settings description
         description = ''
@@ -200,6 +187,14 @@ in
     extraPlugins = [ pkgs.vimPlugins.lazy-nvim ];
     extraPackages = [ pkgs.git ];
 
+    plugins.lazy.setup = {
+      dev = {
+        path = lib.mkDefault "${lazyPath}";
+        patterns = lib.mkDefault ''{"."}'';
+        fallback = lib.mkDefault false;
+      };
+    };
+
     extraConfigLua =
       let
         pluginToLua =
@@ -253,14 +248,14 @@ in
 
         packedPlugins = if length plugins == 1 then head plugins else plugins;
       in
+      # dev = {
+      #   path = "${lazyPath}",
+      #   patterns = {"."},
+      #   fallback = false
+      # },
       mkIf (cfg.plugins != [ ]) ''
         require('lazy').setup({
             ${helpers.toLuaObject cfg.setup},
-            dev = {
-              path = "${lazyPath}",
-              patterns = {"."},
-              fallback = false
-            },
             spec = ${helpers.toLuaObject packedPlugins},
           }
         )
