@@ -58,6 +58,13 @@ in
     plugins.lazy = {
       enable = mkEnableOption "lazy.nvim";
 
+      setup = lib.mkOption {
+        type = types.submodule {
+          freeformType = types.attrsOf types.anything;
+          default = { };
+        };
+      };
+
       plugins =
         with types;
         let
@@ -176,6 +183,15 @@ in
     extraPlugins = [ pkgs.vimPlugins.lazy-nvim ];
     extraPackages = [ pkgs.git ];
 
+    # Set default `lazy.nvim` setup option
+    plugins.lazy.setup = {
+      dev = {
+        path = lib.mkDefault "${lazyPath}";
+        patterns = [ "." ];
+        fallback = lib.mkDefault false;
+      };
+    };
+
     extraConfigLua =
       let
         pluginToLua =
@@ -226,19 +242,16 @@ in
         pluginListToLua = pluginList: flatten (map pluginToLua pluginList);
 
         plugins = pluginListToLua cfg.plugins;
-
         packedPlugins = if length plugins == 1 then head plugins else plugins;
       in
+      # dev = {
+      #   path = "${lazyPath}",
+      #   patterns = {"."},
+      #   fallback = false
+      # },
       mkIf (cfg.plugins != [ ]) ''
         require('lazy').setup(
-          {
-            dev = {
-              path = "${lazyPath}",
-              patterns = {"."},
-              fallback = false
-            },
-            spec = ${helpers.toLuaObject packedPlugins}
-          }
+          ${helpers.toLuaObject (cfg.setup // { spec = packedPlugins; })}
         )
       '';
   };
