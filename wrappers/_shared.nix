@@ -26,6 +26,7 @@ let
     setAttrByPath
     ;
   cfg = config.programs.nixvim;
+  inherit (config.nixvim) helpers;
   extraFiles = lib.filter (file: file.enable) (lib.attrValues cfg.extraFiles);
 in
 {
@@ -50,10 +51,29 @@ in
           listToAttrs (
             map (
               { target, source, ... }:
+              let
+                maybeByteCompile =
+                  source:
+                  let
+                    name =
+                      if lib.isStorePath source then
+                        builtins.substring 33 (-1) (baseNameOf source)
+                      else
+                        baseNameOf source;
+                  in
+                  if
+                    lib.hasSuffix ".lua" source
+                    && cfg.performance.byteCompileLua.enable
+                    && cfg.performance.byteCompileLua.configs
+                  then
+                    helpers.writeByteCompiledLua name (builtins.readFile source)
+                  else
+                    source;
+              in
               {
                 name = filesPrefix + target;
                 value = {
-                  inherit source;
+                  source = maybeByteCompile source;
                 };
               }
             ) extraFiles
