@@ -9,6 +9,22 @@
     plugins.lazy = with pkgs.vimPlugins; {
       enable = true;
 
+      # Setup properties can be directly passed
+      setup = {
+        performance = {
+          rtp = {
+            # disable some rtp plugins
+            disabled_plugins = [
+              "gzip"
+              "tarPlugin"
+              "tohtml"
+              "tutor"
+              "zipPlugin"
+            ];
+          };
+        };
+      };
+
       plugins = [
         vim-closer
 
