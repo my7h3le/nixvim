@@ -47,6 +47,7 @@ in
         with types;
         let
           pluginType = either package (submodule {
+            freeformType = types.attrsOf types.anything;
             options = {
               dir = helpers.mkNullOrOption str "A directory pointing to a local plugin";
 
@@ -162,40 +163,47 @@ in
           plugin:
           let
             keyExists = keyToCheck: attrSet: lib.elem keyToCheck (lib.attrNames attrSet);
+            converted =
+              if isDerivation plugin then
+                { dir = "${lazyPath}/${lib.getName plugin}"; }
+              else
+                let
+                  handledPluginOptions = {
+                    "__unkeyed" = plugin.name;
+
+                    inherit (plugin)
+                      cmd
+                      cond
+                      config
+                      dev
+                      enabled
+                      event
+                      ft
+                      init
+                      keys
+                      lazy
+                      main
+                      module
+                      name
+                      optional
+                      opts
+                      priority
+                      submodules
+                      ;
+
+                    dependencies = helpers.ifNonNull' plugin.dependencies (
+                      if isList plugin.dependencies then (pluginListToLua plugin.dependencies) else plugin.dependencies
+                    );
+
+                    dir =
+                      if plugin ? dir && plugin.dir != null then plugin.dir else "${lazyPath}/${lib.getName plugin.pkg}";
+                  };
+                  freeformPluginOptions = lib.removeAttrs plugin ((lib.attrNames handledPluginOptions) ++ [ "pkg" ]);
+                  combinedPluginOptions = freeformPluginOptions // handledPluginOptions;
+                in
+                combinedPluginOptions;
           in
-          if isDerivation plugin then
-            { dir = "${lazyPath}/${lib.getName plugin}"; }
-          else
-            {
-              "__unkeyed" = plugin.name;
-
-              inherit (plugin)
-                cmd
-                cond
-                config
-                dev
-                enabled
-                event
-                ft
-                init
-                keys
-                lazy
-                main
-                module
-                name
-                optional
-                opts
-                priority
-                submodules
-                ;
-
-              dependencies = helpers.ifNonNull' plugin.dependencies (
-                if isList plugin.dependencies then (pluginListToLua plugin.dependencies) else plugin.dependencies
-              );
-
-              dir =
-                if plugin ? dir && plugin.dir != null then plugin.dir else "${lazyPath}/${lib.getName plugin.pkg}";
-            };
+          converted;
 
         pluginListToLua = map pluginToLua;
 
