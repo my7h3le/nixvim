@@ -41,6 +41,8 @@ in
     plugins.lazy = {
       enable = mkEnableOption "lazy.nvim";
 
+      setup = mkOption { type = types.submodule { freeformType = types.attrsOf types.anything; }; };
+
       plugins =
         with types;
         let
@@ -203,13 +205,18 @@ in
       in
       mkIf (cfg.plugins != [ ]) ''
         require('lazy').setup(
-          {
-            dev = {
-              path = "${lazyPath}",
-              patterns = {"."},
-              fallback = false
-            },
-            spec = ${helpers.toLuaObject packedPlugins}
+          ${
+            helpers.toLuaObject (
+              {
+                dev = {
+                  path = "${lazyPath}";
+                  patterns = [ "." ];
+                  fallback = false;
+                };
+                spec = packedPlugins;
+              }
+              // cfg.setup
+            )
           }
         )
       '';
