@@ -12,6 +12,14 @@
       plugins = [
         vim-closer
 
+        # Test freeform
+        {
+          pkg = vim-dispatch;
+          # The below is not actually a property in the `lazy.nvim` plugin spec
+          # but is purely to test freeform capabilities of the `pluginType`.
+          blah = "test";
+        }
+
         # Load on specific commands
         {
           pkg = vim-dispatch;
