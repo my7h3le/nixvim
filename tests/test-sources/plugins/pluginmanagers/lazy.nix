@@ -12,6 +12,14 @@
       plugins = [
         vim-closer
 
+        # Test freeform
+        {
+          pkg = vim-dispatch;
+          # The below is not actually a property in the `lazy.nvim` plugin spec
+          # but is purely to test freeform capabilities of the `lazyPluginType`.
+          blah = "test";
+        }
+
         # Load on specific commands
         {
           pkg = vim-dispatch;
@@ -90,10 +98,73 @@
     };
   };
 
+  name-only-plugin = {
+    plugins.lazy = with pkgs.vimPlugins; {
+      enable = true;
+      plugins = [
+        {
+          name = "echasnovski/mini.ai";
+          pkg = mini-nvim;
+          enabled = false;
+        }
+        {
+          name = "echasnovski/mini.ai";
+          enabled = false;
+        }
+      ];
+
+    };
+  };
+
+  dir-only-plugin = {
+    plugins.lazy = with pkgs.vimPlugins; {
+      enable = true;
+      plugins = [ { dir = "${LazyVim}"; } ];
+    };
+  };
+
   no-packages = {
     plugins.lazy = {
       enable = true;
       gitPackage = null;
     };
+  };
+
+  single-package = {
+    plugins.lazy = with pkgs.vimPlugins; {
+      enable = true;
+
+      plugins = [ vim-closer ];
+    };
+  };
+
+  single-spec = with pkgs.vimPlugins; {
+    plugins.lazy =
+      let
+        devPath = "${vim-dispatch}";
+      in
+      {
+        enable = true;
+        settings = {
+          dev = {
+            path = devPath;
+            patterns = [ "." ];
+            fallback = false;
+          };
+        };
+
+        plugins = [
+          {
+            pkg = vim-dispatch;
+            optional = true;
+            cmd = [
+              "Dispatch"
+              "Make"
+              "Focus"
+              "Start"
+            ];
+          }
+        ];
+      };
   };
 }
