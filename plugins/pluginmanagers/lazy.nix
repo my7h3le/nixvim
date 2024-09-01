@@ -175,49 +175,21 @@ nixvim.neovim-plugin.mkNeovimPlugin config {
 
       pluginToLua =
         plugin:
-        let
-          keyExists = keyToCheck: attrSet: lib.elem keyToCheck (lib.attrNames attrSet);
-          converted =
-            if isDerivation plugin then
-              { dir = "${lazyPath}/${lib.getName plugin}"; }
-            else
-              let
-                handledPluginOptions = {
-                  "__unkeyed" = plugin.name;
-
-                  inherit (plugin)
-                    cmd
-                    cond
-                    config
-                    dev
-                    enabled
-                    event
-                    ft
-                    init
-                    keys
-                    lazy
-                    main
-                    module
-                    name
-                    optional
-                    opts
-                    priority
-                    submodules
-                    ;
-
-                  dependencies = helpers.ifNonNull' plugin.dependencies (
-                    if isList plugin.dependencies then (pluginListToLua plugin.dependencies) else plugin.dependencies
-                  );
-
-                  dir =
-                    if plugin ? dir && plugin.dir != null then plugin.dir else "${lazyPath}/${lib.getName plugin.pkg}";
-                };
-                freeformPluginOptions = lib.removeAttrs plugin ((lib.attrNames handledPluginOptions) ++ [ "pkg" ]);
-                combinedPluginOptions = freeformPluginOptions // handledPluginOptions;
-              in
-              combinedPluginOptions;
-        in
-        converted;
+        if isDerivation plugin then
+          { dir = "${lazyPath}/${lib.getName plugin}"; }
+        else
+          plugin
+          // {
+            "__unkeyed" = plugin.name;
+            dir =
+              if plugin ? dir && plugin.dir != null then plugin.dir else "${lazyPath}/${lib.getName plugin.pkg}";
+            dependencies = helpers.ifNonNull' plugin.dependencies (
+              if isList plugin.dependencies then (pluginListToLua plugin.dependencies) else plugin.dependencies
+            );
+          }
+          // {
+            pkg = null;
+          };
 
       pluginListToLua = map pluginToLua;
 
