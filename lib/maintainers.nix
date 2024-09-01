@@ -132,4 +132,10 @@
     name = "Johan Larsson";
     keys = [ { fingerprint = "F0D6 BDE7 C7D1 6B3F 7883  73E7 2A41 C0FE DD6F F540"; } ];
   };
+  my7h3le = {
+    email = "mandate-word-dupe@duck.com";
+    github = "my7h3le";
+    githubId = 7899547;
+    name = "Tash";
+  };
 }
