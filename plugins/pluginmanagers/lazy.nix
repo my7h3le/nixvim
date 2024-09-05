@@ -50,7 +50,7 @@ nixvim.neovim-plugin.mkNeovimPlugin {
               or firenvim for example. (accepts fun(LazyPlugin):boolean)
             '';
 
-            dependencies = helpers.mkNullOrOption (helpers.nixvimTypes.eitherRecursive str listOfPlugins) "Plugin dependencies";
+            dependencies = helpers.mkNullOrOption listOfPlugins "Plugin dependencies";
 
             init = helpers.mkNullOrLuaFn "init functions are always executed during startup";
 
@@ -122,6 +122,10 @@ nixvim.neovim-plugin.mkNeovimPlugin {
         default = pkgs.git;
       };
 
+      dev = helpers.mkNullOrOption (types.attrsOf types.anything) ''
+        Options provided to the `require('lazy').setup.dev` table.
+      '';
+
       plugins = mkOption {
         type = listOfPlugins;
         default = [ ];
@@ -136,52 +140,43 @@ nixvim.neovim-plugin.mkNeovimPlugin {
 
       lazyPath =
         let
+          mkEntryFromPlugin =
+            plugin:
+            if lib.isDerivation plugin then
+              {
+                name = "${lib.getName plugin}";
+                path = plugin;
+              }
+            else
+              mkEntryFromPlugin plugin.pkg;
+
           processPlugin =
             plugin:
-            [ (if lib.isDerivation plugin then plugin else plugin.pkg) ]
+            [ (mkEntryFromPlugin plugin) ]
             ++ lib.optionals ((plugin.dependencies or null) != null) (
               builtins.concatMap processPlugin plugin.dependencies
             );
         in
-        pkgs.linkFarmFromDrvs "lazy-plugins" (builtins.concatMap processPlugin lazyPlugins);
+        pkgs.linkFarm "lazy-plugins" (builtins.concatMap processPlugin lazyPlugins);
 
-      setupOptions =
+      specs =
         let
           pluginToSpec =
             plugin:
             if isDerivation plugin then
               { dir = "${lazyPath}/${lib.getName plugin}"; }
             else
-              plugin
-              // {
+              lib.removeAttrs plugin [ "pkg" ]
+              // lib.optionalAttrs ((plugin.dir or null) == null) (pluginToSpec plugin.pkg)
+              // lib.optionalAttrs ((plugin.dependencies or null) != null) {
                 "__unkeyed" = plugin.name;
-                dir = if plugin ? dir && plugin.dir != null then plugin.dir else "${lazyPath}/${plugin.pkg.name}";
-                dependencies = helpers.ifNonNull' plugin.dependencies (
-                  if isList plugin.dependencies then (pluginListToSpecs plugin.dependencies) else plugin.dependencies
-                );
-                # Set pkg property to null as it's been used and no longer needed.
-                pkg = null;
+                dependencies = map pluginToSpec plugin.dependencies;
               };
-
-          pluginListToSpecs = map pluginToSpec;
-
-          pluginSpecsList = pluginListToSpecs lazyPlugins;
-          packedPluginSpecs = if length pluginSpecsList == 1 then head pluginSpecsList else pluginSpecsList;
         in
-        if length pluginSpecsList > 0 then
-          {
-            dev = {
-              path = "${lazyPath}";
-              patterns = [ "." ];
-              fallback = false;
-            };
-            spec = packedPluginSpecs;
-          }
-        else
-          { };
+        map pluginToSpec lazyPlugins;
     in
     {
       extraPackages = [ cfg.gitPackage ];
-      plugins.lazy.settings = setupOptions;
+      plugins.lazy.settings.spec = specs;
     };
 }
