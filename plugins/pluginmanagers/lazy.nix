@@ -148,13 +148,16 @@ nixvim.neovim-plugin.mkNeovimPlugin {
                 path = plugin;
               }
             else
-              mkEntryFromPlugin plugin.pkg;
+              {
+                name = "${lib.getName plugin.pkg}";
+                path = plugin.pkg;
+              };
 
           processPlugin =
             plugin:
             [ (mkEntryFromPlugin plugin) ]
             ++ lib.optionals ((plugin.dependencies or null) != null) (
-              builtins.concatMap processPlugin plugin.dependencies
+              builtins.map mkEntryFromPlugin plugin.dependencies
             );
         in
         pkgs.linkFarm "lazy-plugins" (builtins.concatMap processPlugin lazyPlugins);
@@ -167,7 +170,9 @@ nixvim.neovim-plugin.mkNeovimPlugin {
               { dir = "${lazyPath}/${lib.getName plugin}"; }
             else
               lib.removeAttrs plugin [ "pkg" ]
-              // lib.optionalAttrs ((plugin.dir or null) == null) (pluginToSpec plugin.pkg)
+              // lib.optionalAttrs ((plugin.dir or null) == null) {
+                dir = "${lazyPath}/${lib.getName plugin.pkg}";
+              }
               // lib.optionalAttrs ((plugin.dependencies or null) != null) {
                 "__unkeyed" = plugin.name;
                 dependencies = map pluginToSpec plugin.dependencies;
