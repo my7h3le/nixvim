@@ -135,7 +135,7 @@ nixvim.neovim-plugin.mkNeovimPlugin {
           pluginToSpec =
             plugin:
             if isDerivation plugin then
-              { dir = "${lib.getName plugin}"; }
+              { dir = "${plugin}"; }
             else
               lib.removeAttrs plugin [
                 "name"
