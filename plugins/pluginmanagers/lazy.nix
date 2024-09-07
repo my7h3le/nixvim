@@ -115,6 +115,7 @@ nixvim.neovim-plugin.mkNeovimPlugin {
                 '';
             };
 
+            config.name = lib.mkIf (config.pkg != null) (lib.mkDefault "${lib.getName config.pkg}");
             config.dir = lib.mkIf (config.pkg != null) (lib.mkDefault "${config.pkg}");
           }
         )
@@ -138,30 +139,30 @@ nixvim.neovim-plugin.mkNeovimPlugin {
     let
       lazyPlugins = cfg.plugins;
 
-      specs =
-        let
-          pluginToSpec =
-            plugin:
-            # Note: `plugin` will be an attribute set instead of a derivation here
-            # because `types.coercedTo` has converted it to an attribute set in `extraOptions`,
-            # if it was originally a derivation.
-            #
-            # Return an attribute set with the attributes of the given `plugin`
-            # but with other attributes such as `name`, `dir`, and
-            # `dependencies` conditionally added/overwritten.
-            lib.removeAttrs plugin [ "pkg" ]
-            // lib.optionalAttrs ((plugin.pkg or null) != null) {
-              name = lib.getName plugin.pkg;
-              dir = "${plugin.pkg}";
-            }
-            // lib.optionalAttrs ((plugin.name or null) != null) { inherit (plugin) name; }
-            // lib.optionalAttrs ((plugin.__unkeyed or null) != null) { inherit (plugin) __unkeyed; }
-            // lib.optionalAttrs ((plugin.dir or null) != null) { inherit (plugin) dir; }
-            // lib.optionalAttrs ((plugin.dependencies or null) != null) {
-              dependencies = map pluginToSpec plugin.dependencies;
-            };
-        in
-        map pluginToSpec lazyPlugins;
+      # specs =
+      #   let
+      #     pluginToSpec =
+      #       plugin:
+      #       # Note: `plugin` will be an attribute set instead of a derivation here
+      #       # because `types.coercedTo` has converted it to an attribute set in `extraOptions`,
+      #       # if it was originally a derivation.
+      #       #
+      #       # Return an attribute set with the attributes of the given `plugin`
+      #       # but with other attributes such as `name`, `dir`, and
+      #       # `dependencies` conditionally added/overwritten.
+      #       lib.removeAttrs plugin [ "pkg" ]
+      #       // lib.optionalAttrs ((plugin.pkg or null) != null) {
+      #         name = lib.getName plugin.pkg;
+      #         dir = "${plugin.pkg}";
+      #       }
+      #       // lib.optionalAttrs ((plugin.name or null) != null) { inherit (plugin) name; }
+      #       // lib.optionalAttrs ((plugin.__unkeyed or null) != null) { inherit (plugin) __unkeyed; }
+      #       // lib.optionalAttrs ((plugin.dir or null) != null) { inherit (plugin) dir; }
+      #       // lib.optionalAttrs ((plugin.dependencies or null) != null) {
+      #         dependencies = map pluginToSpec plugin.dependencies;
+      #       };
+      #   in
+      #   map pluginToSpec lazyPlugins;
 
     in
     {
@@ -169,6 +170,6 @@ nixvim.neovim-plugin.mkNeovimPlugin {
         cfg.gitPackage
         cfg.luarocksPackage
       ];
-      plugins.lazy.settings.spec = specs;
+      plugins.lazy.settings.spec = lazyPlugins;
     };
 }
