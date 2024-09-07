@@ -19,7 +19,7 @@ nixvim.neovim-plugin.mkNeovimPlugin {
     let
       lazyPluginType =
         with types;
-        either package (submodule {
+        either package (attrsOf {
           freeformType = attrsOf anything;
           options = {
             dir = helpers.mkNullOrOption str "A directory pointing to a local plugin";
@@ -53,7 +53,7 @@ nixvim.neovim-plugin.mkNeovimPlugin {
             # it must be `helpers.nixvimTypes.eitherRecursive str
             # listOfPlugins`. While nixvim tests won't fail it can cause stack
             # overflow errors when using nixvim in home-manager.
-            dependencies = helpers.mkNullOrOption (types.either listOfPlugins listOfPlugins) "Plugin dependencies";
+            dependencies = helpers.mkNullOrOption listOfPlugins "Plugin dependencies";
 
             init = helpers.mkNullOrLuaFn "init functions are always executed during startup";
 
