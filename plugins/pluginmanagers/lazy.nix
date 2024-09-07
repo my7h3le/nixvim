@@ -180,6 +180,7 @@ nixvim.neovim-plugin.mkNeovimPlugin {
                       {
                         name = lib.mkDefault pkg_name;
                         dir = lib.mkDefault pkg_path;
+                        pkg = null;
                       }
                     );
                   in
