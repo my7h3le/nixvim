@@ -1,8 +1,32 @@
 { pkgs, ... }:
+
+# Note: do not use `plenary-nvim` or any plugin that is a `rockspec` for tests,
+# this is because `lazy.nvim` by default uses the luarocks package manager to
+# process rockspecs. It might be possible to use a rockspec in a test if the
+# rockspec itself does not depend on any other rockspecs but this has not been
+# tested (See:
+# https://github.com/nix-community/nixvim/pull/2082#discussion_r1746585453).
+
 {
   # Empty configuration
   empty = {
     plugins.lazy.enable = true;
+  };
+
+  no-packages = {
+    plugins.lazy = {
+      enable = true;
+      gitPackage = null;
+      luarocksPackage = null;
+    };
+  };
+
+  single-package = {
+    plugins.lazy = with pkgs.vimPlugins; {
+      enable = true;
+
+      plugins = [ vim-closer ];
+    };
   };
 
   test = {
@@ -90,41 +114,112 @@
 
         # Use dependency and run lua function after load
         {
-          pkg = gitsigns-nvim;
-          dependencies = [ plenary-nvim ];
-          config = ''function() require("gitsigns").setup() end'';
+          pkg = yanky-nvim;
+          dependencies = [ yanky-nvim ];
+          config = ''function() require("yanky").setup() end'';
         }
       ];
     };
   };
 
-  name-only-plugin = {
+  single-dir-only-plugin = {
+    plugins.lazy = with pkgs.vimPlugins; {
+      enable = true;
+      plugins = [ { dir = "${LazyVim}"; } ];
+    };
+  };
+
+  multiple-dir-only-plugins = {
     plugins.lazy = with pkgs.vimPlugins; {
       enable = true;
       plugins = [
-        {
-          name = "echasnovski/mini.ai";
-          pkg = mini-nvim;
-          enabled = false;
-        }
-        {
-          name = "echasnovski/mini.ai";
-          enabled = false;
-        }
+        { dir = "${LazyVim}"; }
+        { dir = "${vim-closer}"; }
+        { dir = "${vim-dispatch}"; }
       ];
-
     };
   };
 
-  url-spec-source-plugin = {
+  disabling_plugins = {
+    plugins.lazy =
+      with pkgs.vimPlugins;
+      let
+        test_plugin1_path = "${yanky-nvim}";
+        test_plugin2_path = "${whitespace-nvim}";
+      in
+      {
+        enable = true;
+        plugins = [
+          # Set a custom name for `mini-nvim` and later disable it.
+          {
+            name = "test-mini-nvim";
+            pkg = mini-nvim;
+            enabled = true;
+          }
+          # Disable previously enabled `mini-nvim` using it's custom name.
+          {
+            __unkeyed = "test-mini-nvim";
+            enabled = false;
+          }
+          # Enable a vim plugin without specifying a custom name
+          {
+            pkg = vim-closer;
+            enabled = true;
+          }
+          # Disable previously enabled plugin without specifying a custom name
+          {
+            pkg = vim-closer;
+            enabled = false;
+          }
+          # Enable another plugin without specifying a custom name
+          {
+            pkg = vim-dispatch;
+            enabled = true;
+          }
+          # Disable previously enabled plugin just by using it's name
+          {
+            __unkeyed = "vim-dispatch";
+            enabled = true;
+          }
+          # Enable a plugin using it's path given to `dir`
+          {
+            dir = test_plugin1_path;
+            # We don't need to specify name to be able to disable it later,
+            # it's just here purely for the sake of the test case.
+            name = "test_plugin1";
+            enabled = true;
+          }
+          # Disable previously enabled test_plugin1 using `dir`.
+          {
+            dir = test_plugin1_path;
+            enabled = false;
+          }
+          # Enable a plugin using it's path given to `dir`, but not giving it a
+          # custom name.
+          {
+            dir = test_plugin2_path;
+            enabled = true;
+          }
+          # Disable previously enabled test_plugin2 using `dir`.
+          {
+            dir = test_plugin2_path;
+            enabled = false;
+          }
+        ];
+
+      };
+  };
+
+  out-of-tree-plugins = {
+    # Don't run neovim for this test, as it's purely to test module evaluation.
     test.runNvim = false;
     plugins.lazy = {
+      enable = true;
       settings = {
         dev = {
-          fallback = true;
+          fallback = false;
         };
       };
-      enable = true;
       plugins = [
         {
           "__unkeyed" = "echasnovski/mini.ai";
@@ -142,52 +237,57 @@
     };
   };
 
-  dir-only-plugin = {
-    plugins.lazy = with pkgs.vimPlugins; {
-      enable = true;
-      plugins = [ { dir = "${LazyVim}"; } ];
-    };
-  };
-
-  single-package = {
-    plugins.lazy = with pkgs.vimPlugins; {
-      enable = true;
-
-      plugins = [ vim-closer ];
-    };
-  };
-
-  no-packages = {
-    plugins.lazy = {
-      enable = true;
-      gitPackage = null;
-    };
-  };
-
-  single-spec = with pkgs.vimPlugins; {
+  local_plugins = {
     plugins.lazy =
+      with pkgs.vimPlugins;
       let
-        devPath = "${vim-dispatch}";
+        inherit (pkgs) lib;
+        mkEntryFromDrv = drv: {
+          name = "${lib.getName drv}";
+          path = drv;
+        };
+
+        # Symlink a bunch of test packages to a path in the nix store
+        devPath = pkgs.linkFarm "dev-test-plugins" (
+          map mkEntryFromDrv [
+            nui-nvim
+            vim-vsnip-integ
+            vim-vsnip
+            completion-nvim
+          ]
+        );
       in
       {
         enable = true;
         settings = {
           dev = {
-            path = devPath;
+            # Use `devPath` to simulate a local plugin directory path
+            path = "${devPath}";
             patterns = [ "." ];
             fallback = false;
           };
         };
 
         plugins = [
+          # Use local plugin that resides in path specified in `devPath` i.e.
+          # `plugins.lazy.settings.dev.path` (See: https://lazy.folke.io/spec)
           {
-            pkg = vim-dispatch;
-            optional = true;
-            cmd = [
-              "Dispatch"
-              "Make"
-              "Focus"
-              "Start"
+            __unkeyed = "nui.nvim";
+            dev = true;
+          }
+          # local plugins can have dependencies on other plugins
+          {
+            __unkeyed = "completion.nvim";
+            dev = true;
+            dependencies = [
+              {
+                __unkeyed = "vim.vsnip";
+                dev = true;
+              }
+              {
+                __unkeyed = "vim.vsnip.integ";
+                dev = true;
+              }
             ];
           }
         ];
