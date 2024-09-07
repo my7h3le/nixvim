@@ -19,99 +19,107 @@ nixvim.neovim-plugin.mkNeovimPlugin {
     let
       lazyPluginType =
         with types;
-        either package (submodule {
-          freeformType = attrsOf anything;
-          options = {
-            dir = helpers.mkNullOrOption str "A directory pointing to a local plugin";
+        types.coercedTo types.package (pkg: { inherit pkg; }) (
+          types.submodule (
+            { config, ... }:
 
-            pkg = helpers.mkNullOrOption package "Vim plugin to install";
+            {
+              freeformType = attrsOf anything;
+              options = {
+                dir = helpers.mkNullOrOption str "A directory pointing to a local plugin";
 
-            name = helpers.mkNullOrOption str "Name of the plugin to install";
+                pkg = helpers.mkNullOrOption package "Vim plugin to install";
 
-            dev = helpers.defaultNullOpts.mkBool false ''
-              When true, a local plugin directory will be used instead.
-              See config.dev
-            '';
+                name = helpers.mkNullOrOption str "Name of the plugin to install";
 
-            lazy = helpers.defaultNullOpts.mkBool true ''
-              When true, the plugin will only be loaded when needed.
-              Lazy-loaded plugins are automatically loaded when their Lua modules are required,
-              or when one of the lazy-loading handlers triggers
-            '';
+                dev = helpers.defaultNullOpts.mkBool false ''
+                  When true, a local plugin directory will be used instead.
+                  See config.dev
+                '';
 
-            enabled = helpers.defaultNullOpts.mkStrLuaFnOr bool "`true`" ''
-              When false then this plugin will not be included in the spec. (accepts fun():boolean)
-            '';
+                lazy = helpers.defaultNullOpts.mkBool true ''
+                  When true, the plugin will only be loaded when needed.
+                  Lazy-loaded plugins are automatically loaded when their Lua modules are required,
+                  or when one of the lazy-loading handlers triggers
+                '';
 
-            cond = helpers.defaultNullOpts.mkStrLuaFnOr bool "`true`" ''
-              When false, or if the function returns false,
-              then this plugin will not be loaded. Useful to disable some plugins in vscode,
-              or firenvim for example. (accepts fun(LazyPlugin):boolean)
-            '';
+                enabled = helpers.defaultNullOpts.mkStrLuaFnOr bool "`true`" ''
+                  When false then this plugin will not be included in the spec. (accepts fun():boolean)
+                '';
 
-            dependencies = helpers.mkNullOrOption listOfPlugins "Plugin dependencies";
+                cond = helpers.defaultNullOpts.mkStrLuaFnOr bool "`true`" ''
+                  When false, or if the function returns false,
+                  then this plugin will not be loaded. Useful to disable some plugins in vscode,
+                  or firenvim for example. (accepts fun(LazyPlugin):boolean)
+                '';
 
-            init = helpers.mkNullOrLuaFn "init functions are always executed during startup";
+                dependencies = helpers.mkNullOrOption listOfPlugins "Plugin dependencies";
 
-            config = helpers.mkNullOrStrLuaFnOr (enum [ true ]) ''
-              config is executed when the plugin loads.
-              The default implementation will automatically run require(MAIN).setup(opts).
-              Lazy uses several heuristics to determine the plugin's MAIN module automatically based on the plugin's name.
-              See also opts. To use the default implementation without opts set config to true.
-            '';
+                init = helpers.mkNullOrLuaFn "init functions are always executed during startup";
 
-            main = helpers.mkNullOrOption str ''
-              You can specify the main module to use for config() and opts(),
-              in case it can not be determined automatically. See config()
-            '';
+                config = helpers.mkNullOrStrLuaFnOr (enum [ true ]) ''
+                  config is executed when the plugin loads.
+                  The default implementation will automatically run require(MAIN).setup(opts).
+                  Lazy uses several heuristics to determine the plugin's MAIN module automatically based on the plugin's name.
+                  See also opts. To use the default implementation without opts set config to true.
+                '';
 
-            submodules = helpers.defaultNullOpts.mkBool true ''
-              When false, git submodules will not be fetched.
-              Defaults to true
-            '';
+                main = helpers.mkNullOrOption str ''
+                  You can specify the main module to use for config() and opts(),
+                  in case it can not be determined automatically. See config()
+                '';
 
-            event =
-              with helpers.nixvimTypes;
-              helpers.mkNullOrOption (maybeRaw (either str (listOf str))) "Lazy-load on event. Events can be specified as BufEnter or with a pattern like BufEnter *.lua";
+                submodules = helpers.defaultNullOpts.mkBool true ''
+                  When false, git submodules will not be fetched.
+                  Defaults to true
+                '';
 
-            cmd =
-              with helpers.nixvimTypes;
-              helpers.mkNullOrOption (maybeRaw (either str (listOf str))) "Lazy-load on command";
+                event =
+                  with helpers.nixvimTypes;
+                  helpers.mkNullOrOption (maybeRaw (either str (listOf str))) "Lazy-load on event. Events can be specified as BufEnter or with a pattern like BufEnter *.lua";
 
-            ft =
-              with helpers.nixvimTypes;
-              helpers.mkNullOrOption (maybeRaw (either str (listOf str))) "Lazy-load on filetype";
+                cmd =
+                  with helpers.nixvimTypes;
+                  helpers.mkNullOrOption (maybeRaw (either str (listOf str))) "Lazy-load on command";
 
-            keys =
-              with helpers.nixvimTypes;
-              helpers.mkNullOrOption (maybeRaw (either str (listOf str))) "Lazy-load on key mapping";
+                ft =
+                  with helpers.nixvimTypes;
+                  helpers.mkNullOrOption (maybeRaw (either str (listOf str))) "Lazy-load on filetype";
 
-            module = helpers.mkNullOrOption (enum [ false ]) ''
-              Do not automatically load this Lua module when it's required somewhere
-            '';
+                keys =
+                  with helpers.nixvimTypes;
+                  helpers.mkNullOrOption (maybeRaw (either str (listOf str))) "Lazy-load on key mapping";
 
-            priority = helpers.mkNullOrOption number ''
-              Only useful for start plugins (lazy=false) to force loading certain plugins first.
-              Default priority is 50. It's recommended to set this to a high number for colorschemes.
-            '';
+                module = helpers.mkNullOrOption (enum [ false ]) ''
+                  Do not automatically load this Lua module when it's required somewhere
+                '';
 
-            optional = helpers.defaultNullOpts.mkBool false ''
-              When a spec is tagged optional, it will only be included in the final spec,
-              when the same plugin has been specified at least once somewhere else without optional.
-              This is mainly useful for Neovim distros, to allow setting options on plugins that may/may not be part
-              of the user's plugins
-            '';
+                priority = helpers.mkNullOrOption number ''
+                  Only useful for start plugins (lazy=false) to force loading certain plugins first.
+                  Default priority is 50. It's recommended to set this to a high number for colorschemes.
+                '';
 
-            opts =
-              with helpers.nixvimTypes;
-              helpers.mkNullOrOption (maybeRaw (attrsOf anything)) ''
-                opts should be a table (will be merged with parent specs),
-                return a table (replaces parent specs) or should change a table.
-                The table will be passed to the Plugin.config() function.
-                Setting this value will imply Plugin.config()
-              '';
-          };
-        });
+                optional = helpers.defaultNullOpts.mkBool false ''
+                  When a spec is tagged optional, it will only be included in the final spec,
+                  when the same plugin has been specified at least once somewhere else without optional.
+                  This is mainly useful for Neovim distros, to allow setting options on plugins that may/may not be part
+                  of the user's plugins
+                '';
+
+                opts =
+                  with helpers.nixvimTypes;
+                  helpers.mkNullOrOption (maybeRaw (attrsOf anything)) ''
+                    opts should be a table (will be merged with parent specs),
+                    return a table (replaces parent specs) or should change a table.
+                    The table will be passed to the Plugin.config() function.
+                    Setting this value will imply Plugin.config()
+                  '';
+              };
+
+              config.dir = lib.mkIf (config.pkg != null) (lib.mkDefault "${config.pkg}");
+            }
+          )
+        );
 
       listOfPlugins = types.listOf lazyPluginType;
     in
