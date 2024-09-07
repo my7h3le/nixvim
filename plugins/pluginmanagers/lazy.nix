@@ -49,7 +49,7 @@ nixvim.neovim-plugin.mkNeovimPlugin {
               or firenvim for example. (accepts fun(LazyPlugin):boolean)
             '';
 
-            dependencies = helpers.mkNullOrOption (helpers.nixvimTypes.eitherRecursive str listOfPlugins) "Plugin dependencies";
+            dependencies = helpers.mkNullOrOption listOfPlugins "Plugin dependencies";
 
             init = helpers.mkNullOrLuaFn "init functions are always executed during startup";
 
