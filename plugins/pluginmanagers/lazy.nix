@@ -19,7 +19,7 @@ nixvim.neovim-plugin.mkNeovimPlugin {
     let
       lazyPluginType =
         with types;
-        either package (attrsOf {
+        helpers.nixvimTypes.eitherRecursive package (submodule {
           freeformType = attrsOf anything;
           options = {
             dir = helpers.mkNullOrOption str "A directory pointing to a local plugin";
