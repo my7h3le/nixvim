@@ -117,6 +117,7 @@ nixvim.neovim-plugin.mkNeovimPlugin {
     in
     {
       gitPackage = lib.mkPackageOption pkgs "git" { nullable = true; };
+      luarocksPackage = lib.mkPackageOption pkgs "luarocks" { nullable = true; };
 
       plugins = mkOption {
         type = listOfPlugins;
@@ -135,21 +136,17 @@ nixvim.neovim-plugin.mkNeovimPlugin {
           pluginToSpec =
             plugin:
             if isDerivation plugin then
-              { dir = "${lib.getName plugin}"; }
+              { dir = "${plugin}"; }
             else
               lib.removeAttrs plugin [
                 "name"
                 "pkg"
               ]
               // lib.optionalAttrs ((plugin.pkg or null) != null) {
-                "__unkeyed" = lib.getName plugin.pkg;
                 name = lib.getName plugin.pkg;
                 dir = "${plugin.pkg}";
               }
-              // lib.optionalAttrs ((plugin.name or null) != null) {
-                "__unkeyed" = plugin.name;
-                inherit (plugin) name;
-              }
+              // lib.optionalAttrs ((plugin.name or null) != null) { inherit (plugin) name; }
               // lib.optionalAttrs ((plugin.__unkeyed or null) != null) { inherit (plugin) __unkeyed; }
               // lib.optionalAttrs ((plugin.dir or null) != null) { inherit (plugin) dir; }
               // lib.optionalAttrs ((plugin.dependencies or null) != null) {
@@ -160,7 +157,10 @@ nixvim.neovim-plugin.mkNeovimPlugin {
 
     in
     {
-      extraPackages = [ cfg.gitPackage ];
+      extraPackages = [
+        cfg.gitPackage
+        cfg.luarocksPackage
+      ];
       plugins.lazy.settings.spec = specs;
     };
 }
