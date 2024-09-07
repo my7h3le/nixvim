@@ -138,10 +138,11 @@ nixvim.neovim-plugin.mkNeovimPlugin {
             if isDerivation plugin then
               { dir = "${plugin}"; }
             else
-              lib.removeAttrs plugin [
-                "name"
-                "pkg"
-              ]
+              # If the plugin is an attribute set (not a derivation), return an
+              # attribute set with the attributes of the given `plugin` but
+              # with other attributes such as `name`, `dir`, and `dependencies`
+              # conditionally added/overwritten.
+              lib.removeAttrs plugin [ "pkg" ]
               // lib.optionalAttrs ((plugin.pkg or null) != null) {
                 name = lib.getName plugin.pkg;
                 dir = "${plugin.pkg}";
