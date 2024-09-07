@@ -53,7 +53,7 @@ nixvim.neovim-plugin.mkNeovimPlugin {
             # it must be `helpers.nixvimTypes.eitherRecursive str
             # listOfPlugins`. While nixvim tests won't fail it can cause stack
             # overflow errors when using nixvim in home-manager.
-            dependencies = helpers.mkNullOrOption (helpers.nixvimTypes.eitherRecursive str listOfPlugins) "Plugin dependencies";
+            dependencies = helpers.mkNullOrOption (helpers.nixvimTypes.eitherRecursive listOfPlugins listOfPlugins) "Plugin dependencies";
 
             init = helpers.mkNullOrLuaFn "init functions are always executed during startup";
 
