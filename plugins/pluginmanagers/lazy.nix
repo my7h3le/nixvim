@@ -17,20 +17,24 @@ nixvim.neovim-plugin.mkNeovimPlugin {
 
   extraOptions =
     let
-      coerceToLazyPlugin =
-        p:
-        if lib.isDerivation p then
+      # A plugin defined in the `nixvim.plugins.lazy.plugins` list can either
+      # be of `types.package`, `types.str`. Depending on the type of the given
+      # plugin this plugin will conditionally return an appropriate plugin
+      # spec.
+      coerceToLazyPluginSpec =
+        plugin:
+        if lib.isDerivation plugin then
           {
-            dir = "${p}";
-            name = "${lib.getName p}";
+            dir = "${plugin}";
+            name = "${lib.getName plugin}";
           }
-        else if lib.isString p then
-          { __unkeyed = p; }
+        else if lib.isString plugin then
+          { __unkeyed = plugin; }
         else
-          p;
+          plugin;
 
       lazyPluginType =
-        types.coercedTo (helpers.nixvimTypes.eitherRecursive types.str types.package) coerceToLazyPlugin
+        types.coercedTo (helpers.nixvimTypes.eitherRecursive types.str types.package) coerceToLazyPluginSpec
           (
             types.submodule (
               { config, ... }:
@@ -39,7 +43,15 @@ nixvim.neovim-plugin.mkNeovimPlugin {
               {
                 freeformType = attrsOf anything;
                 options = {
+                  __unkeyed = helpers.mkNullOrOption str ''
+                    The "unkeyed" attribute is the plugin's short plugin url.
+                    It ill be expanded using `config.git.url_format`. It can
+                    also be a url or dir.
+                  '';
+
                   dir = helpers.mkNullOrOption str "A directory pointing to a local plugin";
+
+                  url = helpers.mkNullOrOption str "A custom git url where the plugin is hosted";
 
                   pkg = helpers.mkNullOrOption package "Vim plugin to install";
 
@@ -66,11 +78,36 @@ nixvim.neovim-plugin.mkNeovimPlugin {
                     or firenvim for example. (accepts fun(LazyPlugin):boolean)
                   '';
 
-                  # Note: do not change the type of `dependencies` to
-                  # `listOfPlugins` it must be `helpers.nixvimTypes.eitherRecursive
-                  # str listOfPlugins`. While nixvim tests won't fail it can cause
-                  # stack overflow errors when using nixvim in home-manager.
-                  dependencies = helpers.mkNullOrOption lazyDependenciesType "Plugin dependencies";
+                  # WARN: be careful changing the type of `dependencies`, if
+                  # `helpers.nixvimTypes.eitherRecursive` is not used or a
+                  # different type is used without careful manual testing as
+                  # well, stack overflow can be caused that won't be picked up
+                  # the tests. This happened when changing the type to
+                  # `types.listOf lazyPluginsListType`.
+                  #
+                  # `dependencies` can be a single string as well. Example:
+                  #
+                  # ```
+                  # require("lazy").setup({})
+                  #   "hrsh7th/nvim-cmp",
+                  #   -- load cmp on InsertEnter
+                  #   event = "InsertEnter",
+                  #   -- these dependencies will only be loaded when cmp loads
+                  #   -- dependencies are always lazy-loaded unless specified otherwise
+                  #   dependencies = "hrsh7th/cmp-nvim-lsp",
+                  #   config = function()
+                  #     -- ...
+                  #   end,
+                  # },
+                  # ```
+                  dependencies = helpers.mkNullOrOption (helpers.nixvimTypes.eitherRecursive str lazyPluginsListType) ''
+                    A list of plugin names or plugin specs that should be
+                    loaded when the plugin loads. Dependencies are always
+                    lazy-loaded unless specified otherwise. When specifying a
+                    name, make sure the plugin spec has been defined somewhere
+                    else. This can also be a single string such as for a short
+                      plugin url (See: https://lazy.folke.io/spec).
+                  '';
 
                   init = helpers.mkNullOrLuaFn "init functions are always executed during startup";
 
@@ -139,17 +176,14 @@ nixvim.neovim-plugin.mkNeovimPlugin {
             )
           );
 
-      lazyDependenciesType = types.coercedTo (helpers.nixvimTypes.eitherRecursive (types.listOf str) (
-        types.listOf lazyPluginType
-      )) (dependencies: map coerceToLazyPlugin dependencies) (types.listOf lazyPluginType);
-      listOfPlugins = types.listOf lazyPluginType;
+      lazyPluginsListType = types.listOf lazyPluginType;
     in
     {
       gitPackage = lib.mkPackageOption pkgs "git" { nullable = true; };
       luarocksPackage = lib.mkPackageOption pkgs "luarocks" { nullable = true; };
 
       plugins = mkOption {
-        type = listOfPlugins;
+        type = lazyPluginsListType;
         default = [ ];
         description = "List of plugins";
       };
