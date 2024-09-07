@@ -17,20 +17,20 @@ nixvim.neovim-plugin.mkNeovimPlugin {
 
   extraOptions =
     let
+      coerceToLazyPlugin =
+        p:
+        if lib.isDerivation p then
+          {
+            dir = "${p}";
+            name = "${lib.getName p}";
+          }
+        else if lib.isString p then
+          { __unkeyed = p; }
+        else
+          p;
+
       lazyPluginType =
-        types.coercedTo (helpers.nixvimTypes.eitherRecursive types.str types.package)
-          (
-            plugin:
-            if lib.isDerivation plugin then
-              {
-                dir = "${plugin}";
-                name = "${lib.getName plugin}";
-              }
-            else if lib.isString plugin then
-              { __unkeyed = plugin; }
-            else
-              plugin
-          )
+        types.coercedTo (helpers.nixvimTypes.eitherRecursive types.str types.package) coerceToLazyPlugin
           (
             types.submodule (
               { config, ... }:
@@ -70,7 +70,7 @@ nixvim.neovim-plugin.mkNeovimPlugin {
                   # `listOfPlugins` it must be `helpers.nixvimTypes.eitherRecursive
                   # str listOfPlugins`. While nixvim tests won't fail it can cause
                   # stack overflow errors when using nixvim in home-manager.
-                  dependencies = helpers.mkNullOrOption listOfPlugins "Plugin dependencies";
+                  dependencies = helpers.mkNullOrOption lazyDependenciesType "Plugin dependencies";
 
                   init = helpers.mkNullOrLuaFn "init functions are always executed during startup";
 
@@ -139,6 +139,9 @@ nixvim.neovim-plugin.mkNeovimPlugin {
             )
           );
 
+      lazyDependenciesType = types.coercedTo (helpers.nixvimTypes.eitherRecursive (types.listOf str) (
+        types.listOf lazyPluginType
+      )) (dependencies: map coerceToLazyPlugin dependencies) (types.listOf lazyPluginType);
       listOfPlugins = types.listOf lazyPluginType;
     in
     {
