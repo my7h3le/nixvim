@@ -170,8 +170,20 @@ nixvim.neovim-plugin.mkNeovimPlugin {
                     '';
                 };
 
-                config.name = lib.mkIf (config.pkg != null) (lib.mkDefault "${lib.getName config.pkg}");
-                config.dir = lib.mkIf (config.pkg != null) (lib.mkDefault "${config.pkg}");
+                config =
+                  let
+                    defaults = lib.mkIf (config.pkg != null) (
+                      let
+                        pkg_name = "${lib.getName config.pkg}";
+                        pkg_path = "${config.pkg}";
+                      in
+                      {
+                        name = lib.mkDefault pkg_name;
+                        dir = lib.mkDefault pkg_path;
+                      }
+                    );
+                  in
+                  defaults;
               }
             )
           );
