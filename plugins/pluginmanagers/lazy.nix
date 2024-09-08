@@ -199,20 +199,20 @@ nixvim.neovim-plugin.mkNeovimPlugin {
       # it shouldn't do any harm it does take up unecessary space in the
       # init.lua file. Since we're done using it we will strip it from the
       # final spec.
-      # removePkgAttrFromPlugin =
-      #   plugin:
-      #   builtins.removeAttrs plugin [ "pkg" ]
-      #   // lib.optionalAttrs (((plugin.dependencies or null) != null) && lib.isList plugin.dependencies) {
-      #     dependencies = map removePkgAttrFromPlugin plugin.dependencies;
-      #   };
+      removePkgAttrFromPlugin =
+        plugin:
+        builtins.removeAttrs plugin [ "pkg" ]
+        // lib.optionalAttrs (((plugin.dependencies or null) != null) && lib.isList plugin.dependencies) {
+          dependencies = map removePkgAttrFromPlugin plugin.dependencies;
+        };
 
+      removePkgAttrFromPlugins = plugins: map removePkgAttrFromPlugin plugins;
     in
-    # removePkgAttrFromPlugins = plugins: map removePkgAttrFromPlugin plugins;
     {
       extraPackages = [
         cfg.gitPackage
         cfg.luarocksPackage
       ];
-      plugins.lazy.settings.spec = cfg.plugins;
+      plugins.lazy.settings.spec = removePkgAttrFromPlugins cfg.plugins;
     };
 }
