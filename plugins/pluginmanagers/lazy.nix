@@ -18,9 +18,9 @@ nixvim.neovim-plugin.mkNeovimPlugin {
   extraOptions =
     let
       # A plugin defined in the `nixvim.plugins.lazy.plugins` list can either
-      # be of `types.package`, `types.str`. Depending on the type of the given
-      # plugin this plugin will conditionally return an appropriate plugin
-      # spec.
+      # be of `types.package` or `types.str`. Depending on the type of the
+      # given plugin this plugin will conditionally return an appropriate
+      # plugin spec.
       coerceToLazyPluginSpec =
         plugin:
         if lib.isDerivation plugin then
@@ -193,11 +193,27 @@ nixvim.neovim-plugin.mkNeovimPlugin {
       };
     };
 
-  extraConfig = cfg: {
-    extraPackages = [
-      cfg.gitPackage
-      cfg.luarocksPackage
-    ];
-    plugins.lazy.settings.spec = cfg.plugins;
-  };
+  extraConfig =
+    cfg:
+    let
+      # The `pkg` property isn't a part of the `lazy.nvim` plugin spec, while
+      # it shouldn't do any harm it does take up unecessary space in the
+      # init.lua file. Since we're done using it we will strip it from the
+      # final spec.
+      removePkgAttrFromPlugin =
+        plugin:
+        builtins.removeAttrs plugin [ "pkg" ]
+        // lib.optionalAttrs ((plugin.dependencies or null) != null) {
+          dependencies = map removePkgAttrFromPlugin plugin.dependencies;
+        };
+
+      removePkgAttrFromPlugins = plugins: map removePkgAttrFromPlugin plugins;
+    in
+    {
+      extraPackages = [
+        cfg.gitPackage
+        cfg.luarocksPackage
+      ];
+      plugins.lazy.settings.spec = removePkgAttrFromPlugins cfg.plugins;
+    };
 }
