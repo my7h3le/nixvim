@@ -122,6 +122,18 @@
     };
   };
 
+  dependencies-test = {
+    plugins.lazy = {
+      enable = true;
+      plugins = with pkgs.vimPlugins; [
+        {
+          pkg = LazyVim;
+          dependencies = trouble-nvim;
+        }
+      ];
+    };
+  };
+
   single-dir-only-plugin = {
     plugins.lazy = with pkgs.vimPlugins; {
       enable = true;
