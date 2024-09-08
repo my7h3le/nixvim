@@ -172,14 +172,6 @@ nixvim.neovim-plugin.mkNeovimPlugin {
                     '';
                 };
 
-                config.__unkeyed =
-                  if (cfg.url != null) then
-                    lib.mkDefault cfg.url
-                  else if (cfg.dir != null) then
-                    lib.mkDefault cfg.dir
-                  else
-                    lib.mkIf (cfg.name != null) (lib.mkDefault cfg.name);
-
                 config.name = lib.mkIf (cfg.pkg != null) (lib.mkDefault "${lib.getName cfg.pkg}");
                 config.dir = lib.mkIf (cfg.pkg != null) (lib.mkDefault "${cfg.pkg}");
               }
