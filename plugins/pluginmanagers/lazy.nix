@@ -103,7 +103,7 @@ nixvim.neovim-plugin.mkNeovimPlugin {
               #   end,
               # },
               # ```
-              dependencies = helpers.mkNullOrOption (helpers.nixvimTypes.eitherRecursive lazyPluginType lazyPluginsListType) ''
+              dependencies = helpers.mkNullOrOption (types.either lazyPluginType lazyPluginsListType) ''
                 A list of plugin names or plugin specs that should be
                 loaded when the plugin loads. Dependencies are always
                 lazy-loaded unless specified otherwise. When specifying a
