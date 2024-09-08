@@ -38,10 +38,11 @@ nixvim.neovim-plugin.mkNeovimPlugin {
       lazyPluginType = types.coercedTo lazyPluginCoercableType coerceToLazyPluginSpec (
         types.submodule (
           { config, ... }:
-          with types;
+
           let
             cfg = config;
           in
+          with types;
           {
             freeformType = attrsOf anything;
             options = {
