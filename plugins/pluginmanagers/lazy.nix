@@ -25,11 +25,11 @@ nixvim.neovim-plugin.mkNeovimPlugin {
         plugin:
         if lib.isDerivation plugin then
           {
-            dir = "${plugin}";
-            name = "${lib.getName plugin}";
+            dir = lib.mkDefault "${plugin}";
+            name = lib.mkDefault "${lib.getName plugin}";
           }
         else if lib.isString plugin then
-          { __unkeyed = plugin; }
+          { __unkeyed = lib.mkDefault plugin; }
         else
           plugin;
 
@@ -38,8 +38,10 @@ nixvim.neovim-plugin.mkNeovimPlugin {
           (
             types.submodule (
               { config, ... }:
-
               with types;
+              let
+                cfg = config;
+              in
               {
                 freeformType = attrsOf anything;
                 options = {
@@ -170,21 +172,10 @@ nixvim.neovim-plugin.mkNeovimPlugin {
                     '';
                 };
 
-                config =
-                  let
-                    defaults = lib.mkIf (config.pkg != null) (
-                      let
-                        pkg_name = "${lib.getName config.pkg}";
-                        pkg_path = "${config.pkg}";
-                      in
-                      {
-                        name = lib.mkDefault pkg_name;
-                        dir = lib.mkDefault pkg_path;
-                        pkg = null;
-                      }
-                    );
-                  in
-                  defaults;
+                config = lib.mkIf (cfg.pkg != null) {
+                  name = lib.mkDefault "${lib.getName cfg.pkg}";
+                  dir = lib.mkDefault "${cfg.pkg}";
+                };
               }
             )
           );
