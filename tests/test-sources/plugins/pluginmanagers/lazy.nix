@@ -82,6 +82,28 @@
           cmd = "ALEEnable";
         }
 
+        # Plugins can have post-install/update hooks
+        {
+          pkg = markdown-preview-nvim;
+          cmd = "MarkdownPreview";
+        }
+
+        # Post-install/update hook with neovim command
+        {
+          pkg = nvim-treesitter;
+          opts = {
+            ensure_installed = { };
+          };
+        }
+
+      ];
+    };
+  };
+
+  dependencies-test = {
+    plugins.lazy = {
+      enable = true;
+      plugins = with pkgs.vimPlugins; [
         # Plugins can have dependencies on other plugins
         {
           pkg = completion-nvim;
@@ -98,38 +120,107 @@
           ];
         }
 
-        # Plugins can have post-install/update hooks
+        # # FIX: Use dependency and run lua function after load
+        # {
+        #   pkg = yanky-nvim;
+        #   dependencies = [ yanky-nvim ];
+        #   config = ''function() require("yanky").setup() end'';
+
+        # }require("lazy").setup({
         {
-          pkg = markdown-preview-nvim;
-          cmd = "MarkdownPreview";
+          pkg = nvim-colorizer-lua;
+          dependencies = [ nvim-cursorline ];
+          config = ''
+            function()
+              require("nvim-cursorline").setup{}
+            end '';
         }
 
-        # Post-install/update hook with neovim command
-        {
-          pkg = nvim-treesitter;
-          opts = {
-            ensure_installed = { };
-          };
-        }
-
-        # Use dependency and run lua function after load
-        {
-          pkg = yanky-nvim;
-          dependencies = [ yanky-nvim ];
-          config = ''function() require("yanky").setup() end'';
-        }
-      ];
-    };
-  };
-
-  dependencies-test = {
-    plugins.lazy = {
-      enable = true;
-      plugins = with pkgs.vimPlugins; [
+        # Dependencies can be a single package
         {
           pkg = LazyVim;
           dependencies = trouble-nvim;
         }
+
+        # Dependencies can be multiple packages
+        {
+          pkg = nvim-cmp;
+          dependencies = [
+            nvim-lspconfig
+            cmp-nvim-lua
+            cmp-nvim-lsp
+            cmp-buffer
+            cmp-path
+            cmp-cmdline
+            cmp-vsnip
+            vim-vsnip
+            luasnip
+            cmp_luasnip
+          ];
+        }
+
+        # Dependencies can be a single name that is defined elsewhere
+        {
+          pkg = nvim-cmp;
+          dependencies = "luasnip";
+        }
+        {
+          name = "luasnip";
+          pkg = luasnip;
+        }
+
+        # Dependencies can be a list of names that are defined elsewhere
+        {
+          pkg = nvim-cmp;
+          dependencies = [
+            "nvim-lspconfig"
+            "cmp-nvim-lua"
+            "cmp-nvim-lsp"
+          ];
+        }
+        {
+          pkg = nvim-lspconfig;
+          name = "nvim-lspconfig";
+        }
+        {
+          pkg = cmp-nvim-lua;
+          name = "cmp-nvim-lua";
+        }
+        {
+          pkg = cmp-nvim-lsp;
+          name = "cmp-nvim-lsp";
+        }
+
+        # Dependencies can be a list of names that are defined elsewhere in the
+        # list of plugins.
+        {
+          pkg = lualine-nvim;
+          dependencies = [
+            "web-dev-icons"
+            "lsp-progress"
+          ];
+        }
+        {
+          pkg = nvim-web-devicons;
+          name = "web-dev-icons";
+        }
+        {
+          pkg = lualine-lsp-progress;
+          name = "lsp-progress";
+        }
+
+        # Dependencies can be a list of names that are defined elsewhere in the
+        # list of plugins. It the names given are just the default names of a
+        # package they need not be explicitly defined.
+        {
+          pkg = trouble-nvim;
+          dependencies = [
+            "nvim-web-devicons"
+            "lsp-colors.nvim"
+          ];
+        }
+        nvim-web-devicons
+        lsp-colors-nvim
       ];
     };
   };
