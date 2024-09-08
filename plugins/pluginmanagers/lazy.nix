@@ -80,29 +80,12 @@ nixvim.neovim-plugin.mkNeovimPlugin {
                 or firenvim for example. (accepts fun(LazyPlugin):boolean)
               '';
 
-              # WARN: be careful if changing the type of `dependencies`. If
-              # `lazyPluginDependenciesType` is not used or
-              # `helpers.nixvimTypes.eitherRecursive` is not used when
-              # creating a different type, stack overflow from infinite
-              # recursion can occur. The tests (don't/may not) pick this
-              # up, so careful manual testing should be done as well when
-              # changing the type.
-              #
-              # `dependencies` can be a single string as well. Example:
-              #
-              # ```
-              # require("lazy").setup({})
-              #   "hrsh7th/nvim-cmp",
-              #   -- load cmp on InsertEnter
-              #   event = "InsertEnter",
-              #   -- these dependencies will only be loaded when cmp loads
-              #   -- dependencies are always lazy-loaded unless specified otherwise
-              #   dependencies = "hrsh7th/cmp-nvim-lsp",
-              #   config = function()
-              #     -- ...
-              #   end,
-              # },
-              # ```
+              # WARNING: Be very careful when changing the type of
+              # `dependencies`. Choosing the wrong type may cause a stack
+              # overflow due to infinite recursion, and it's possible that the
+              # test cases won't catch this problem. To be safe, perform
+              # thorough manual testing if you change the type of
+              # `dependencies`.
               dependencies = helpers.mkNullOrOption (types.either lazyPluginType lazyPluginsListType) ''
                 A list of plugin names or plugin specs that should be
                 loaded when the plugin loads. Dependencies are always
