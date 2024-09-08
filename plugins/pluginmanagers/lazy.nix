@@ -33,7 +33,7 @@ nixvim.neovim-plugin.mkNeovimPlugin {
         else
           plugin;
 
-      lazyPluginCoercableType = helpers.nixvimTypes.eitherRecursive types.str types.package;
+      lazyPluginCoercableType = with types; either str package;
 
       lazyPluginType = types.coercedTo lazyPluginCoercableType coerceToLazyPluginSpec (
         types.submodule (
