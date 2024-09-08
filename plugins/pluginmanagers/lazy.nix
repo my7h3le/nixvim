@@ -86,7 +86,9 @@ nixvim.neovim-plugin.mkNeovimPlugin {
               # overflow due to infinite recursion, and it's possible that the
               # test cases won't catch this problem. To be safe, perform
               # thorough manual testing if you change the type of
-              # `dependencies`.
+              # `dependencies`. Also use `types.either` instead of just
+              # `either` here, as using just `either` also leads to stack
+              # overflow.
               dependencies = helpers.mkNullOrOption (types.either lazyPluginType lazyPluginsListType) ''
                 A list of plugin names or plugin specs that should be
                 loaded when the plugin loads. Dependencies are always
