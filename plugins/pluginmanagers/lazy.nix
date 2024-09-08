@@ -103,7 +103,7 @@ nixvim.neovim-plugin.mkNeovimPlugin {
               #   end,
               # },
               # ```
-              dependencies = helpers.mkNullOrOption (lazyPluginDependenciesType) ''
+              dependencies = helpers.mkNullOrOption (helpers.nixvimTypes.eitherRecursive lazyPluginType lazyPluginsListType) ''
                 A list of plugin names or plugin specs that should be
                 loaded when the plugin loads. Dependencies are always
                 lazy-loaded unless specified otherwise. When specifying a
@@ -180,14 +180,6 @@ nixvim.neovim-plugin.mkNeovimPlugin {
       );
 
       lazyPluginsListType = types.listOf lazyPluginType;
-
-      lazyPluginCoercableDependenciesType =
-        with types;
-        helpers.nixvimTypes.eitherRecursive (helpers.nixvimTypes.eitherRecursive str package) lazyPluginsListType;
-
-      lazyPluginDependenciesType = types.coercedTo (lazyPluginCoercableDependenciesType) (
-        deps: if lib.isList deps then map coerceToLazyPluginSpec deps else [ (coerceToLazyPluginSpec deps) ]
-      ) (lazyPluginsListType);
     in
     {
       gitPackage = lib.mkPackageOption pkgs "git" { nullable = true; };
