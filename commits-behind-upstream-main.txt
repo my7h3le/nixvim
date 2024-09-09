@@ -1,0 +1,1953 @@
+commit caefb266bee301922a4cf4d4564b1b000a0a21c3
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Sat Aug 31 16:26:04 2024 -0500
+
+    flake-modules/dev: treefmt ignore .editorconfig
+
+commit e05a9e45b37a7f5bee61eda8ea4b296273afb2ab
+Author: Florian Brandes <florian.brandes@posteo.de>
+Date:   Sat Aug 31 16:29:29 2024 +0200
+
+    plugins/lsp: update `eslint` package name
+    
+    Due to https://github.com/NixOS/nixpkgs/pull/337888
+    
+    Signed-off-by: Florian Brandes <florian.brandes@posteo.de>
+
+commit d7bdf1f4b85d02ac3a080abcd40e324d57c0cfd3
+Author: Florian Brandes <florian.brandes@posteo.de>
+Date:   Sat Aug 31 15:48:59 2024 +0200
+
+    plugins/none-ls: update `prisma` package name
+    
+    Due to https://github.com/NixOS/nixpkgs/pull/337521
+    
+    Signed-off-by: Florian Brandes <florian.brandes@posteo.de>
+
+commit a8dd7a5657f2ed09a2a35fd06c877ea1b8e778e7
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Sat Aug 31 09:11:25 2024 -0500
+
+    plugins/git-worktree: fix no package test
+
+commit 3325dcb00b05c3514b6e15260e210b0bc8b363d2
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Sat Aug 31 09:11:13 2024 -0500
+
+    plugins/gitgutter: add tests
+
+commit b6d96387d10a27f507474171510aa807f2d117da
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Sat Aug 31 09:09:27 2024 -0500
+
+    plugins/gitgutter: fix grepPackage
+    
+    Resolves https://github.com/nix-community/nixvim/issues/2124
+
+commit ee6ee48bbe1ffa88fd4b2af7d68ab0315bc817f0
+Author: Andreas Krath <70445343+andreaskrath@users.noreply.github.com>
+Date:   Sat Aug 31 10:50:58 2024 +0200
+
+    readme: fix incorrect description
+
+commit 56208f9e3f46f034353636fa651df8663ec57fa3
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Fri Aug 30 08:09:04 2024 -0500
+
+    plugins/telescope: add iconsPackage
+
+commit bcda408e78129786b132dcc0747a044c6d0e7ea8
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Fri Aug 30 08:07:59 2024 -0500
+
+    plugins/treesitter: revert add iconsPackage
+
+commit 2704133fe3ca616b22ed6685cc67180456eb4160
+Author: refaelsh <refaelsh@pm.me>
+Date:   Fri Aug 30 00:57:13 2024 +0300
+
+    contributing: document `plugins/default.nix`
+    
+    Mention that new plugins need to be imported via the `default.nix` file.
+
+commit c96b46f44b81b897d18e5185125ce23fbe1af87d
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 14:56:09 2024 -0500
+
+    plugins/fugitive: use gitPackage
+
+commit 82b899ab6de60d40c80aec05837bf1568b17e50c
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 14:56:01 2024 -0500
+
+    plugins/committia: use gitPackage
+
+commit 38bc0b88e996087f4ea955ff4f2860e4b6684294
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 14:16:29 2024 -0500
+
+    plugins/neo-tree: use gitPackage
+
+commit 6945c6c17ffb3584ad7e054dc22899bfff3e5d3a
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 14:15:55 2024 -0500
+
+    plugins/nvim-tree: use gitPackage
+
+commit efb004a61fb0173a2e5625c401ef6738ff2bea55
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 11:23:09 2024 -0500
+
+    plugins/gitgutter: use gitPackage
+
+commit 710f3472ec281675830eff8578f9d03d4bd6ceca
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 11:22:41 2024 -0500
+
+    plugins/packer: use gitPackage
+
+commit 4fe95d450271549c066840fcd7f5c98ba9c75e6d
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 11:22:06 2024 -0500
+
+    plugins/lazy: use gitPackage
+
+commit ce6573424d949513650d4d7bc2dacc17a0462377
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 11:21:04 2024 -0500
+
+    plugins/lualine: use gitPackage
+
+commit 831c814bb3af1d78f90ef1175b94622df2874f8d
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 11:19:30 2024 -0500
+
+    plugins/git-worktree: use gitPackage
+
+commit d4bcebc7cae10e1338ecde7653b27288c761c6f0
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 11:18:58 2024 -0500
+
+    plugins/neogit: use gitPackage
+
+commit 98dc0aabe29554b0f2f8ffdf6fed0b23c5218c64
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 15:53:38 2024 -0500
+
+    plugins/alpha: fix iconsPackage
+
+commit 6eb21520772140e644e98fce2bb44eed8869884d
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 15:53:33 2024 -0500
+
+    plugins/fzf-lua: fix iconsPackage
+
+commit 0db6e86e8dd9468be40472ba647d87a71ac6ab63
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 09:54:31 2024 -0500
+
+    plugins/alpha: use iconsPackage
+
+commit f2ef2929ad7e842d4cac5c9d5d3dd47a29b9d23d
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 09:52:35 2024 -0500
+
+    plugins/diffview: use iconsPackage
+
+commit e122f465a96a00e3960435387e9a42804fba1397
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 09:41:26 2024 -0500
+
+    plugins/fzf-lua: use iconsPackage
+
+commit 6f4eced1ca280a844ce9515cfa584c1e098ab100
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 09:31:03 2024 -0500
+
+    plugins/chadtree: use iconsPackage
+
+commit 86d66e410ac8ca3e58578c8e4d5f61c340231883
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 09:26:19 2024 -0500
+
+    plugins/lspsaga: use iconsPackage
+
+commit 46cf3dad9f38a87300308d4fbc081bc21749e3cd
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 09:22:52 2024 -0500
+
+    plugins/bufferline: use iconsPackage
+
+commit f59a3c70aafa3318792e37b3ce00b25e9036af3d
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 09:21:20 2024 -0500
+
+    plugins/barbar: use iconsPackage
+
+commit 4ab24e77a57667e5be39186fc241d8ae364ca8d5
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 09:18:16 2024 -0500
+
+    plugins/neo-tree: use iconsPackage
+
+commit d3e387899fee7980ddfca1a413bb74de3b8afe58
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 09:16:42 2024 -0500
+
+    plugins/nvim-tree: use iconsPackage
+
+commit 150c5f454b3128140aca5e29e9e522929188cd41
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 29 09:12:57 2024 -0500
+
+    plugins/trouble: use iconsPackage
+
+commit 4acf12c49d5514d58f78b7ebda8838f5e988fd2a
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Wed Aug 28 22:02:21 2024 -0500
+
+    plugins/treesitter: add iconsPackage
+
+commit bc7f4166f475bf16b8dac90dc660730ba502c024
+Author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+Date:   Thu Aug 29 05:43:22 2024 +0000
+
+    generated: Update
+    
+    - Updated efmls-configs.nix
+    - Updated rust-analyzer.nix
+
+commit eff7d61785003c73faec5c780f53432a4ac20601
+Author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+Date:   Thu Aug 29 05:43:14 2024 +0000
+
+    flake.lock: Update
+    
+    Flake lock file updates:
+    
+    • Updated input 'git-hooks':
+        'github:cachix/git-hooks.nix/c8a54057aae480c56e28ef3e14e4960628ac495b' (2024-08-23)
+      → 'github:cachix/git-hooks.nix/4509ca64f1084e73bc7a721b20c669a8d4c5ebe6' (2024-08-28)
+    • Updated input 'nixpkgs':
+        'github:NixOS/nixpkgs/d0e1602ddde669d5beb01aec49d71a51937ed7be' (2024-08-24)
+      → 'github:NixOS/nixpkgs/71e91c409d1e654808b2621f28a327acfdad8dc2' (2024-08-28)
+    • Updated input 'treefmt-nix':
+        'github:numtide/treefmt-nix/070f834771efa715f3e74cd8ab93ecc96fabc951' (2024-08-22)
+      → 'github:numtide/treefmt-nix/3ffd842a5f50f435d3e603312eefa4790db46af5' (2024-08-28)
+
+commit 70e9532ec290769e4d671747b0f65b1c29a3c14e
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Wed Aug 28 02:32:17 2024 +0100
+
+    docs: fix typo in `pkgs` arg default value
+
+commit 975af6a498b916683c3a1e0125f5e3260ca5a5bf
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Wed Aug 28 01:32:04 2024 +0100
+
+    tests: simplify fetch-tests slightly
+    
+    Simplify by reducing the number of transformations done to the
+    test-files' test-case modules attr.
+    
+    Since `pkgs.linkFarm` can accept _either_ a list or an attrset, we don't
+    need to transform the attrset into a list.
+
+commit 1c879ec3aa6ab92d5700ec417dc1958354b8cf87
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Wed Aug 28 00:20:37 2024 +0100
+
+    tests: add regression test for warnings + assertions
+    
+    Ensure `mkTestDerivationFromNixvimModule` correctly test warnings & assertions.
+    
+    Also did some minor cleanup:
+    - Call `failing-tests.nix` using `pkgs.callPackage`
+    - Replace repetive use of `testBuildFailure` with a wrapper
+      `mkFailingNixvimTest`
+
+commit 4814147442cd3f12f8160ecad9e36751f68cdc22
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sat Aug 24 20:03:45 2024 +0100
+
+    modules/test: add `config` and `options` passthrus
+    
+    This should make inspection of tests a little easier.
+
+commit af31063538fa20d0bbd9460a1147a69e75032909
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sat Aug 24 20:03:04 2024 +0100
+
+    modules/test: switch to `runCommand`
+
+commit 1085bcd7ccf561577ff52dba76b1cb8d35f2c124
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Tue Aug 27 10:22:20 2024 -0500
+
+    plugins/which-key: fix icon examples
+    
+    Which-key implemented proper icon support, utilize the icon attribute to
+    properly override/set icons so that alignment doesn't get thrown off and
+    it's inherited with child mappings.
+
+commit 60ea38d2c450537eb2adadff9527c8d0db6f9fea
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sun Aug 25 16:46:52 2024 +0100
+
+    tests: test the tests
+    
+    Adds a regression test for #2076. This test ensures that
+    `extraConfigLua` is used in `finalPackage` and that the test will fail
+    correctly when running `nvim` results in unexpected output.
+
+commit eac092c876e4c4861c6df0cff93e25b972b1842c
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Sat Aug 24 19:18:58 2024 -0500
+
+    readme: fix incorrect demo configuration
+
+commit 7e3ed24e52e2d400b84b22524cba987a495a3f24
+Author: Sascha Ohms <sasch9r@gmail.com>
+Date:   Mon Aug 26 09:51:41 2024 +0200
+
+    plugins/lint: fix inconsistent description + examples
+
+commit 9af4c3970c13c4508f5f724e2a6a315ba5ba88e3
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sat Aug 24 19:55:13 2024 +0100
+
+    tests: fix tests by enabling `wrapRc`
+    
+    Since cbd1003d9d3dcc371f0602a66ff32af9f8c14490 I'm able to add _some_
+    invalid config definitions to modules the tests are using and get no
+    build error.
+    
+    For example `extraConfigLua = null;` should produce an invalid type
+    error, but doesn't.
+    
+    One less visible change in that commit is the move away from using the
+    "standalone" wrapper (`makeNixvimWithModule`), which implicitly sets
+    `wrapRc = true`.
+    
+    Adding back `wrapRc` to the tests seems to fix the issue, however this
+    makes me wonder if there's an underlying issue with wrapping/not-wrapping?
+    
+    Perhaps we've simply uncovered a long-standing eval issue that is masked
+    over by using `wrapRc`?
+
+commit fa2058970c90bc636454e8d172aed5b43547507c
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sun Aug 25 16:13:23 2024 +0100
+
+    lib/tests.nix: fix infinite recursion in args
+
+commit 665680a5caeb57ff73e0a112ac805f5456f2a91d
+Author: elythh <gwen@omg.lol>
+Date:   Mon Aug 26 20:34:41 2024 +0200
+
+    plugins/lint: fix conform incorrect option description
+
+commit aa1f5a74ffa348d4cf4ffc32792b901a0699da00
+Author: elythh <gwen@omg.lol>
+Date:   Fri Aug 23 16:40:28 2024 +0200
+
+    plugins/comment-box-nvim: init
+
+commit 45bb6636e5e3d4903c321cd8019bb403570a68ee
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Mon Aug 26 12:03:22 2024 -0500
+
+    tests/lsp: re-enable typst-lsp
+
+commit d0564ce4cfd3d9eff700de66b86b943326b41946
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Mon Aug 26 12:02:08 2024 -0500
+
+    tests/example-configuration: re-enable jsonls
+
+commit 9673ea70f429ba396e7f2e1fef27b6647ed86b88
+Author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+Date:   Mon Aug 26 16:32:17 2024 +0000
+
+    flake.lock: Update
+    
+    Flake lock file updates:
+    
+    • Updated input 'nix-darwin':
+        'github:lnl7/nix-darwin/ea319a737939094b48fda9063fa3201ef2479aac' (2024-08-24)
+      → 'github:lnl7/nix-darwin/ac5694a0b855a981e81b4d9f14052e3ff46ca39e' (2024-08-25)
+    • Updated input 'nixpkgs':
+        'github:NixOS/nixpkgs/c374d94f1536013ca8e92341b540eba4c22f9c62' (2024-08-21)
+      → 'github:NixOS/nixpkgs/d0e1602ddde669d5beb01aec49d71a51937ed7be' (2024-08-24)
+    • Updated input 'nuschtosSearch':
+        'github:NuschtOS/search/a05d1805f2a2bc47d230e5e92aecbf69f784f3d0' (2024-08-18)
+      → 'github:NuschtOS/search/5a08d691de30b6fc28d58ce71a5e420f2694e087' (2024-08-25)
+
+commit bb8ecad13c229e1c89301055c8e54d8d0e33e839
+Author: jacek szymanski <jacek.p.szymanski@gmail.com>
+Date:   Sun Aug 25 17:11:45 2024 +0200
+
+    plugins/nvim-jdtls: allow lua on nvim-jdtls.data
+    
+    Make it possible to set data directory with lua, so it can be project-dependent.
+
+commit 8234ee85eaa2c8b7f2c74f5b4cdf02c4965b07fc
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Sat Aug 24 14:40:10 2024 -0500
+
+    tests/plugins/lightline: fix test
+    
+    Lightline has an internal list of colorschemes that are supported which
+    can be found at
+    https://github.com/itchyny/lightline.vim/blob/master/colorscheme.md
+
+commit 89b876dc0deb83fb3b3d1773f0cbe59aafb261d4
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Fri Aug 23 14:40:44 2024 -0500
+
+    plugins/conform-nvim: migrate to mkNeovimPlugin
+
+commit a1c7932bdbaa566996d7d7de6afb05b1ddf05fb1
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Tue Aug 20 22:52:34 2024 -0500
+
+    plugins/rustaceanvim: fix checkhealth error with neotest configuration
+    
+    Rustaceanvim will throw an error if the configuration is sourced after
+    initialization. Our globals are defined at the top of the init.lua so
+    moving the settings to leverage the globals option and setting a
+    callback function as default to ensure we dont need to worry about
+    something initializing it before lspOnAttach is available.
+
+commit 1e74f3deabefdbc2e5ebc4f49e08950f3c234c20
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Wed Aug 21 09:16:50 2024 -0500
+
+    plugins/lsp: make lspOnAttach available globally
+    
+    Allows plugins to utilize the global nixvim table to access the lsp on
+    attach function and prevent needing to filter attribute set or manage
+    the property explicitly in lua.
+
+commit 8a272143ee5e862a41ebb7b376bf59055397fac6
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Wed Aug 21 13:11:35 2024 -0500
+
+    modules/opts: move options to top of init.lua
+    
+    Using mkOrder to ensure the options can be accessible to everything
+    throughout the config. Setting right below global table available, so
+    variables can reference stuff inside global table.
+
+commit 203d31810f2e88335d70e97ab108502927189f24
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Wed Aug 21 10:52:35 2024 -0500
+
+    top-level/output: add global table top of init.lua
+    
+    Creating a global table at top of init.lua to allow sharing between
+    different sections of the init.lua without worrying about ordering.
+
+commit 45081d5f21b71b44e292b70c0f64bf9ac898eab8
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Fri Aug 23 19:40:54 2024 -0500
+
+    flake-modules/list-plugins: add extra filters
+    
+    I have been using this more and wanted to create some filters to
+    onlyoutput the information I cared about. This adds the ability to
+    filter bykind, state, and whether a plugin has deprecation warnings.
+
+commit 3a04cc75e6d113ec7eb952a0c6cf9068980e9470
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Fri Aug 23 19:39:13 2024 -0500
+
+    flake-modules/dev: add isort
+
+commit 88b1e6a369a172b46589ec45bfb2ac01bfb77705
+Author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+Date:   Sat Aug 24 12:29:55 2024 +0000
+
+    flake.lock: Update
+    
+    Flake lock file updates:
+    
+    • Updated input 'git-hooks':
+        'github:cachix/git-hooks.nix/6cedaa7c1b4f82a266e5d30f212273e60d62cb0d' (2024-08-21)
+      → 'github:cachix/git-hooks.nix/c8a54057aae480c56e28ef3e14e4960628ac495b' (2024-08-23)
+    • Updated input 'home-manager':
+        'github:nix-community/home-manager/2598861031b78aadb4da7269df7ca9ddfc3e1671' (2024-08-18)
+      → 'github:nix-community/home-manager/c2cd2a52e02f1dfa1c88f95abeb89298d46023be' (2024-08-23)
+    • Updated input 'nix-darwin':
+        'github:lnl7/nix-darwin/a8968d88e5a537b0491f68ce910749cd870bdbef' (2024-08-22)
+      → 'github:lnl7/nix-darwin/ea319a737939094b48fda9063fa3201ef2479aac' (2024-08-24)
+    • Updated input 'treefmt-nix':
+        'github:numtide/treefmt-nix/1d07739554fdc4f8481068f1b11d6ab4c1a4167a' (2024-08-16)
+      → 'github:numtide/treefmt-nix/070f834771efa715f3e74cd8ab93ecc96fabc951' (2024-08-22)
+
+commit b10ccc5250c17d3f48e6226ed56d8641eb4f3c6f
+Author: menixator <3684951+menixator@users.noreply.github.com>
+Date:   Sat Aug 24 10:23:54 2024 +0500
+
+    docs: fix markdown issue with tree-sitter docs
+
+commit f4dd8924b189f2ec1c00577b4168ed9c5919d65e
+Author: menixator <3684951+menixator@users.noreply.github.com>
+Date:   Thu Aug 22 21:36:57 2024 +0500
+
+    docs: document how to install custom tree-sitter grammars
+
+commit 1181535e34e433775ec3dbe962e50b1ebf85d44e
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sat Aug 24 01:55:49 2024 +0100
+
+    plugins/lsp/extensions: remove `with lib` + fix `mkRaw` reference
+    
+    See https://github.com/nix-community/nixvim/pull/2053#issuecomment-2307961673
+
+commit 4c8d3559ac4548723eeba9861a94ab63219b0d43
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Fri Aug 23 09:17:11 2024 -0500
+
+    plugins/lightline: migrate to mkNeovimPlugin
+
+commit 052ee66dbb975960cc151db0b5db6a893503582a
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 22 13:47:57 2024 -0500
+
+    docs/mdbook: move description to bottom
+    
+    Long descriptions for plugins will shove the plugin's source link and
+    maintainer information far down the page. Since those are fairly short
+    and the description is a variable size. Moving below to maintain
+    consistent placement.
+
+commit 9033f1cf2d46da308cb38e258f82fed2e6da7310
+Author: Joe Fredette <jfredett@gmail.com>
+Date:   Fri Aug 23 11:16:53 2024 -0400
+
+    plugins/neotest: fix missing toLuaObject definition
+
+commit 1854d591cb0e5be6ad97f5091766cdf28e948265
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 22 09:54:58 2024 -0500
+
+    tests/plugins/lsp: re-enable tests
+
+commit 77cbd0313d5b294bcc5bdcc48c052b6382c6e249
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 22 10:03:02 2024 -0500
+
+    plugins/colorschemes: remove with lib;
+
+commit fba168aba758c7caa68d826deb141dd8b3aed171
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 22 09:24:17 2024 -0500
+
+    plugins/colorschemes: migrate helpers -> lib.nixvim
+
+commit b470800240926a6b5262fc9030477b7e8fc17453
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 22 09:20:54 2024 -0500
+
+    plugins/bufferlines/barbar: migrate helpers -> lib.nixvim
+
+commit fe12a092f6507da22d90a01254d5b6588dc858ed
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Thu Aug 22 13:46:05 2024 +0100
+
+    tests: general cleanup
+    
+    - Refactor much of `tests/fetch-tests.nix`
+    - Move `mkTest` up to let-block in `tests/default.nix`
+
+commit 087f70cb0ab56fb49f87c148a1c39bf8852bacb2
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Thu Aug 22 11:31:57 2024 +0100
+
+    tests: remove special case for efmls-configs
+
+commit 06419627e2172cf457b21e09bb5ee3a5cc21294f
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Thu Aug 22 10:59:34 2024 +0100
+
+    tests/plugins/nvim-osc52: use new `test.checkWarnings` option
+
+commit 004181813fa6e28688e396255474f632aa5709d8
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Wed Aug 21 06:00:24 2024 +0100
+
+    tests/plugins/schemastore: don't check warnings
+    
+    Follow up to a1a34887791489d571fd996bbdd772899757a49c
+    
+    Uses new `test.checkWarnings` option.
+
+commit 088e584e5407d99fc4b2bd86e8dcc16e53309235
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Mon Aug 5 14:25:44 2024 +0100
+
+    modules/test: check warnings/assertions
+    
+    Warnings and assertions defined as `config.warnings` and `config.assertions`
+    respectively will be checked as part of the test derivation, instead of
+    when evaluating the modules.
+    
+    Adds new `checkWarnings` and `checkAssertions` test options (default true).
+
+commit 83c2844bec202d074c2afb8eb74db9e02bab6dde
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 22 00:00:55 2024 -0500
+
+    plugins/telescope: migrate helpers -> lib.nixvim
+
+commit d7b506efddb97f24a33831d071b8b957c79f8533
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Wed Aug 21 23:46:46 2024 -0500
+
+    plugins/neotest: migrate helpers -> lib.nixvim
+
+commit 511a328aa307032775710db5993d3b8bc83e1113
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Fri Aug 2 02:03:07 2024 +0100
+
+    wrappers: add our lib to the host's `_module.args`
+    
+    Make our "extended" lib available to host modules as `_module.args.nixvimLib`.
+    
+    We didn't do this before because `helpers` was too generic of a name,
+    but `nixvimLib` should be ok.
+    
+        { nixvimLib, ... }: {
+            programs.nixvim.someOption = nixvimLib.nixvim.mkRaw "print('Hi')";
+        }
+
+commit e555ba13b165f0c3fb462370068000bf63b7fec8
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Tue Aug 20 23:38:01 2024 +0100
+
+    docs/helpers: document the "extended" lib
+
+commit e41696e5027a5419fdbd7e07dacb71b77085f25f
+Author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+Date:   Thu Aug 22 08:02:37 2024 +0000
+
+    flake.lock: Update
+    
+    Flake lock file updates:
+    
+    • Updated input 'git-hooks':
+        'github:cachix/git-hooks.nix/bfef0ada09e2c8ac55bbcd0831bd0c9d42e651ba' (2024-08-16)
+      → 'github:cachix/git-hooks.nix/6cedaa7c1b4f82a266e5d30f212273e60d62cb0d' (2024-08-21)
+    • Updated input 'nix-darwin':
+        'github:lnl7/nix-darwin/076b9a905af8a52b866c8db068d6da475839d97b' (2024-08-17)
+      → 'github:lnl7/nix-darwin/a8968d88e5a537b0491f68ce910749cd870bdbef' (2024-08-22)
+    • Updated input 'nixpkgs':
+        'github:NixOS/nixpkgs/8a3354191c0d7144db9756a74755672387b702ba' (2024-08-18)
+      → 'github:NixOS/nixpkgs/c374d94f1536013ca8e92341b540eba4c22f9c62' (2024-08-21)
+
+commit b7f419a759f70126e220533b724cc17e8528b184
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sat Aug 3 16:36:50 2024 +0100
+
+    lib: migrate `helpers.nixvimTypes` -> `lib.types`
+
+commit b414a5364969cdbfbb5c2f588bada446510103ec
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sat Aug 3 16:28:41 2024 +0100
+
+    lib/types: merge into `extendedLib`
+
+commit 38b09c1621b07518b8ba51d68ea4153216a09569
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Wed Aug 21 02:35:38 2024 +0100
+
+    modules/test: remove docker dependency
+
+commit 19d5f4b134839c69c65eb2f0f5e06a2ade335b3c
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Mon Aug 5 17:40:18 2024 +0100
+
+    lib/test: move from tests/test-derivation
+
+commit cbd1003d9d3dcc371f0602a66ff32af9f8c14490
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Mon Aug 5 12:21:24 2024 +0100
+
+    modules/test: move test derivation to an option
+    
+    Introduced the `test.derivation` read-only option.
+
+commit 851edc8df1347aef556a646c80d469a3137331ba
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sun Aug 4 21:54:17 2024 +0100
+
+    lib/modules: add `evalNixvim`
+    
+    Evaluates a nixvim config, by default also checking warnings and assertions.
+    
+    This used internally by the standalone wrapper.
+
+commit bc7a7ad1d674a332555c8fc299adf194804c49ed
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Wed Jul 17 15:23:28 2024 +0100
+
+    module/outputs: use `mkIf` for `wrapRc`
+    
+    Implement the `wrapRc` option using `lib.mkIf` instead of using _real_
+    `if` branches.
+
+commit 6975ee09f55b4a1518b76a31e3c9fe5b7618d3f3
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Wed Jul 17 15:16:06 2024 +0100
+
+    modules/outputs: make `type` readOnly at the top-level
+    
+    Instead of relying on `lib.mkForce` we can enforce this more strictly by
+    setting the option "readOnly".
+
+commit c4fcbb0dcf153a8bac18d5aced9f8c025c74a66d
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sat Jul 6 23:06:07 2024 +0100
+
+    modules/context: add `isTopLevel` option
+
+commit cb413995e1e101c76d755b7f131ce60c7ea3985d
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Mon Aug 19 22:14:01 2024 -0500
+
+    plugins/todo-comments: migrate keymaps to mkMapOptionSubmodule
+
+commit 39081a41067a7bdb66f6f85a3fee9693ff8a21b1
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Mon Aug 19 16:26:00 2024 -0500
+
+    tests/plugins/lsp: re-enable vala-ls on linux
+
+commit 9a218fed3127d5c3da8a0f081be81a66dd7429b5
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Mon Aug 19 16:24:25 2024 -0500
+
+    tests/plugins/none-ls: re-enable d2_fmt and yamlfix
+
+commit 366f25598a4f35f590a6b5887628e763df0eb939
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Mon Aug 19 16:17:21 2024 -0500
+
+    tests/plugins/lsp: re-enable omnisharp on darwin
+
+commit ec9d29918321173c57a5fa8ca5a93106c373d12c
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Mon Aug 19 16:09:45 2024 -0500
+
+    tests/plugins/openscad: re-enable on darwin
+    
+    Builds for me locally.
+
+commit a1a34887791489d571fd996bbdd772899757a49c
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Mon Aug 19 15:40:15 2024 -0500
+
+    tests/plugins/lsp: disable vscode-langservers-extracted tests (broken package)
+    
+    Re-enable after https://github.com/NixOS/nixpkgs/pull/335559 is
+    available in nixos-unstable.
+
+commit f7cdecbad86da43ed1a85586a3e0a50143b60505
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Mon Aug 19 15:26:55 2024 -0500
+
+    tests/plugins/none-ls: disable prisma_format test (broken package)
+
+commit a9ffb6c9582caacc7a0367f34a16f56f77b105ed
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Mon Aug 19 15:23:49 2024 -0500
+
+    tests/plugins/lsp: disable prismals test (broken package)
+
+commit f62d77d3fa88622ed2ea82a2727756b5b7fea3fd
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Mon Aug 19 15:12:56 2024 -0500
+
+    plugins/lsp: python3Packages.ruff-lsp -> ruff-lsp fallback
+
+commit ec9e5c071ade143b59cadd885b5b96aa142ef7ef
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Tue Aug 13 09:44:48 2024 -0500
+
+    plugins/markview: remove unnecessary extraPlugin
+
+commit 94fb980f352fd8c2701faa3a811a9004a5b93691
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Tue Aug 13 09:44:41 2024 -0500
+
+    plugins/yazi: remove unnecessary extraPlugin
+
+commit 460b47997f534a5c452068b46287bcd5a67d227e
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Sat Aug 17 01:08:57 2024 +0200
+
+    tests/plugins/lsp: disable typst-lsp test (broken package)
+
+commit fc6d40d798518218bb934e255b62cedd465bd048
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Sat Aug 17 01:07:53 2024 +0200
+
+    tests/plugins/lsp: typst-lsp -> tinymist
+
+commit b4065751768e12edf5ca760453f51c799758ad79
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Tue Aug 13 10:09:39 2024 +0200
+
+    plugins/lsp/astro: remove unnecessary alternative package path
+    
+    https://github.com/NixOS/nixpkgs/pull/333736
+
+commit d3cb90aa6e1d117270a1c4479a168bff2d5e0348
+Author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+Date:   Tue Aug 13 08:05:32 2024 +0000
+
+    generated: Updated rust-analyzer.nix
+
+commit 907c249abad4cd57d74d98411c9e3aef3b88bac7
+Author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+Date:   Tue Aug 13 08:05:25 2024 +0000
+
+    flake.lock: Update
+    
+    Flake lock file updates:
+    
+    • Updated input 'nixpkgs':
+        'github:NixOS/nixpkgs/5e0ca22929f3342b19569b21b2f3462f053e497b' (2024-08-09)
+      → 'github:NixOS/nixpkgs/a58bc8ad779655e790115244571758e8de055e3d' (2024-08-11)
+
+commit 123a55ed6f8ae2daec76af5a0ee7e495ccb7e884
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Tue Aug 20 00:54:50 2024 +0100
+
+    tests: remove special treatment of `module`
+    
+    Since we no longer need to extract `tests.dontRun` from an attrset, we
+    no longer need the "special" `module` attr.
+
+commit 7b2a6cd9e62b4c797508104d7f2904468892c63d
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Tue Aug 20 00:44:25 2024 +0100
+
+    tests: `tests.dontRun` -> `test.runNvim`
+    
+    Convert all test-cases to use the new `test.runNvim` module option.
+
+commit f47374fd268e2c8842dde8cc08f4ab06a6026745
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Tue Aug 20 00:30:16 2024 +0100
+
+    modules/test: init, replacing `dontRun` arg
+    
+    Introduces the `test.runNvim` module option.
+    
+    Deprecates the historic `dontRun` argument passed to the test-derivation
+    helpers.
+    
+    Soft-deprecates the `tests.dontRun` attr used in tests currently.
+
+commit 312db6b6e2d98dd8d22223fe383c7e0b4bab60c6
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Mon Aug 19 03:55:56 2024 +0100
+
+    flake-modules/devshell: update tests command with link-farm support
+    
+    Since we're using link-farms, we need to access the underlying tests as
+    `passthru.entries.*`.
+
+commit 69c2fa866ea6c63ef85333f1ece96ffe58327547
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Mon Aug 19 01:11:10 2024 +0100
+
+    tests: group tests by 10
+    
+    Attempt to find a middle ground between having a single link-farm and
+    one test per file.
+    
+    This groups up to ten tests per (roughly) 28 link-farms.
+
+commit 8f99c3953c6bea7b23ec04c60a658dd11ea8bdb4
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Mon Aug 19 00:45:47 2024 +0100
+
+    lib/util: add `groupListBySize`
+    
+    Splits up a list into many sub-lists based on the given max-size.
+    
+    e.g.
+    ```nix
+    groupListBySize 2 [ 1 2 3 4 5 ]
+    => [ [ 1 2 ] [ 3 4 ] [ 5 ] ]
+    ```
+
+commit 693e749edbea55b8dc8f422ebe3b623f7bf61dd7
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Mon Aug 19 00:38:22 2024 +0100
+
+    tests/lib-test: correctly print expected/result
+    
+    In some edge cases, expected and result can't be directly used in string
+    interpolation, so pass them through `lib.generators.toPretty` to be safe.
+
+commit 7a11b66f11d292b59571dad85fd1501dbd9bd0c1
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sun Aug 18 21:27:48 2024 +0100
+
+    lib/keymap: allow extra options/modules in `mkMapOptionSubmodule`
+    
+    This is needed to allow plugins to add bespoke features to their keymap
+    submodules without having to re-implement the whole thing.
+
+commit 7fb1f9dd9de4e94cb80f18d12e140e7cd5977183
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sat Aug 17 22:40:14 2024 +0100
+
+    modules/keymap: improve `lua` deprecation
+    
+    - Replace nullable lua option with a no-default option.
+    - Made it so the deprecated option is only declared when `lua = true` is passed.
+    - Replace `normalizeMappings` with a `removeDeprecatedMapAttrs` helper.
+    - Added warnings for all options that historically had `lua` support.
+
+commit c52ba6785661f095221aa1e1eb24f57e89d7b2de
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sun Aug 18 20:17:14 2024 +0100
+
+    Revert "tests: Allow to test multiple derivations in a single test derivation"
+    
+    This reverts commit 71126bfebeae32cd731d70705295804f3da3f158.
+
+commit 9688ef723f53cdc62506a86981359a4bc8421716
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sun Aug 18 20:42:25 2024 +0100
+
+    tests: use a link-farm again, but only per-file
+
+commit 379ae77a76ba2818b0c7876e97636f7064b84db6
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Fri Aug 16 22:14:24 2024 -0500
+
+    plugins/todo-comments: migrate to mkNeovimPlugin
+
+commit 78fc4be6a830e8dc01f3e66ddbe3243b4bfe8560
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Fri Aug 16 16:25:46 2024 -0500
+
+    workflows/update: only run upstream
+
+commit 00f32f0430f82c74919c72af84bc95bf5ae434e4
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 15 22:36:02 2024 -0500
+
+    tests/lua-loader: builtins.match -> lib.hasInfix
+    
+    Getting invalid regex expression on darwin.
+
+commit 6ab17b1b2e6bc2c10718025105d452dd929cc058
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 15 22:28:28 2024 -0500
+
+    top-level/output: include meta in package
+    
+    Required to prevent errors due to missing license information in
+    neovim-wrapper.
+
+commit ebd2182b44150fcab0f92cdc4be8ff2ed93fd2cf
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Wed Aug 14 13:11:43 2024 -0500
+
+    plugins/which-key: updated spec examples and tests
+    
+    Improve documentation for supported configurations
+
+commit fb4e6c2361ffd88e3a0a48ac8e90034076f25527
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Thu Aug 15 08:02:57 2024 -0500
+
+    flake-modules/devshell: add getopt runtimeInput
+    
+    Use a consistent behavior of getopt in launchtests.sh. Wasn't able to
+    use tests command on macbook without including this because the macOS
+    getopt didn't support our usage.
+
+commit a96aa9730af8c85dd7ed15e359ac23e9686f0a9a
+Author: Enno Richter <enno@nerdworks.de>
+Date:   Thu Aug 1 12:14:21 2024 +0200
+
+    tests/plugins/utils/spectre: enable tests on Darwin
+
+commit cb398ce4ba243c7a3a8d1fbfea1b56a44de6b3c9
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Mon Aug 12 00:03:42 2024 -0500
+
+    plugins/bufferline: migrate to mkNeovimPlugin
+    
+    Also resolves https://github.com/nix-community/nixvim/issues/1890 by
+    automatically setting up `diagnostics.update_in_insert` for the user.
+
+commit db4c4e5b1707f334a3e11530cb253d2f41051a3f
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Tue Aug 13 09:23:17 2024 -0500
+
+    lib/deprecation: expose `mkSettingsRenamedOptionModules` publicly
+    
+    Extracted the `optionsRenamedToSettings` implementation
+    from`mkVimPlugin` and `mkNeovimPlugin` into a new public helper.
+
+commit e3ec1c4a468f046595d0d3657b3bab5f00d776ff
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Tue Aug 13 08:05:55 2024 -0500
+
+    plugins/which-key: move listOfLen to lib.types
+    
+    Allows us to require a list to have a certain length for plugins that
+    request it.
+
+commit 4eb2ad7db7ff0cb76a296b5af23b072418ad5be7
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sun Aug 11 21:17:45 2024 +0100
+
+    lib/lua: support nixpkg's "lua-inline" type
+    
+    See #1935
+
+commit dbf6f7bc997dc3a9ab1f014ea075600357226950
+Author: Quentin Boyer <quentin+dev@familleboyer.net>
+Date:   Sat Aug 10 18:56:59 2024 +0200
+
+    update-script/rust-analyzer: Filter out headers from option descriptions
+    
+    Headers are not allowed in nixpkgs option descriptions.
+
+commit ad704ddba70415a982a686257563609c25a22101
+Author: Quentin Boyer <quentin+dev@familleboyer.net>
+Date:   Sun Aug 11 10:34:07 2024 +0200
+
+    generated,rust-analyzer: Handle objects with defined properties
+    
+    They are implemented as submodules instead of an attrset of anything
+
+commit f823d01002acd7e1adab01680e42e31b8edc50f5
+Author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+Date:   Mon Aug 12 10:59:55 2024 +0000
+
+    flake.lock: Update
+    
+    Flake lock file updates:
+    
+    • Updated input 'home-manager':
+        'github:nix-community/home-manager/b3d5ea65d88d67d4ec578ed11d4d2d51e3de525e' (2024-08-07)
+      → 'github:nix-community/home-manager/086f619dd991a4d355c07837448244029fc2d9ab' (2024-08-11)
+    • Updated input 'nuschtosSearch':
+        'github:NuschtOS/search/1016f4620e321c12ff1dbcd464e9de889e302d1c' (2024-08-08)
+      → 'github:NuschtOS/search/6ca2c3ae05a915c160512bd41f6810f456c9b30d' (2024-08-11)
+    • Updated input 'treefmt-nix':
+        'github:numtide/treefmt-nix/14c092e0326de759e16b37535161b3cb9770cea3' (2024-08-10)
+      → 'github:numtide/treefmt-nix/349de7bc435bdff37785c2466f054ed1766173be' (2024-08-12)
+
+commit d9055abe2044f4bf9e81f414215cca81c02cbd72
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Fri Aug 9 21:32:45 2024 -0500
+
+    plugins/markview: init
+
+commit f13bdef0bc697261c51eab686c28c7e2e7b7db3c
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Sat Aug 10 10:30:51 2024 +0200
+
+    plugins/lsp/astro: fix package attribute path
+
+commit 988906f8edc76d20cecdc97de78f93ed89187e70
+Author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+Date:   Sat Aug 10 08:52:49 2024 +0000
+
+    flake.lock: Update
+    
+    Flake lock file updates:
+    
+    • Updated input 'git-hooks':
+        'github:cachix/git-hooks.nix/06939f6b7ec4d4f465bf3132a05367cccbbf64da' (2024-08-05)
+      → 'github:cachix/git-hooks.nix/c7012d0c18567c889b948781bc74a501e92275d1' (2024-08-09)
+    • Updated input 'home-manager':
+        'github:nix-community/home-manager/afc892db74d65042031a093adb6010c4c3378422' (2024-08-02)
+      → 'github:nix-community/home-manager/b3d5ea65d88d67d4ec578ed11d4d2d51e3de525e' (2024-08-07)
+    • Updated input 'nixpkgs':
+        'github:NixOS/nixpkgs/cb9a96f23c491c081b38eab96d22fa958043c9fa' (2024-08-04)
+      → 'github:NixOS/nixpkgs/5e0ca22929f3342b19569b21b2f3462f053e497b' (2024-08-09)
+    • Updated input 'nuschtosSearch':
+        'github:NuschtOS/search/aa5f6246565cc9b1e697d2c9d6ed2c842b17fff6' (2024-08-04)
+      → 'github:NuschtOS/search/1016f4620e321c12ff1dbcd464e9de889e302d1c' (2024-08-08)
+
+commit 4852f94f8ccae551514df0092a077014bafb95ca
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Fri Aug 9 08:42:04 2024 -0500
+
+    plugins/yazi: init
+
+commit c46bd820adabaf23acbccbbd226b1941566acb51
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Thu Aug 8 23:30:51 2024 +0100
+
+    plugins/firenvim: fix aliasing `settings` into `globals`
+    
+    Needed to use `options.*.settings` instead of `config.*.settings`.
+    
+    I was concerned that the test-case didn't pick up on this, so I added an
+    new test case with some basic assertions.
+
+commit fab51138b7f8d2196b359d1a0986eaf0b69a9b9e
+Author: alxdb <alxdb@pm.me>
+Date:   Thu Aug 8 23:29:39 2024 +0100
+
+    plugins/lsp/bufls: init
+
+commit 1adbf11900ff11e3d2c4cf9473a8aba23225a50a
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Mon Jul 29 15:18:12 2024 -0500
+
+    plugins/which-key: migrate to mkNeovimPlugin
+
+commit 1b135dedc4b6256faad9dae2f625e821425a60dd
+Author: Haseeb Majid <haseeb.majid@imaginecurve.com>
+Date:   Thu Aug 8 13:02:54 2024 +0100
+
+    plugins/neotest: add neotest-golang
+
+commit 78abafe280b1ea102fda879799b590da5d84725f
+Author: psfloyd <peter.racoon@gmail.com>
+Date:   Tue Jul 16 01:02:44 2024 -0300
+
+    plugins/lz-n: init
+
+commit 593f5215cb1df010451675c19f2ad5c5481ccee3
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Sun Aug 4 10:36:55 2024 +0200
+
+    plugins/firenvim: init
+
+commit c9a855fe680a62ed25d848d5a8f80cb5479cd0ae
+Author: psfloyd <peter.racoon@gmail.com>
+Date:   Sat Aug 3 13:45:18 2024 -0300
+
+    plugins/nvim-snippets: init
+
+commit 6c1e87676c374b91f1cadd77a94b857a92e7582b
+Author: psfloyd <peter.racoon@gmail.com>
+Date:   Sat Aug 3 12:17:25 2024 -0300
+
+    maintainers: add psfloyd
+
+commit e48ce785d9e72c0106319d93e23c5579336ffe33
+Author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+Date:   Tue Aug 6 06:23:45 2024 +0000
+
+    flake.lock: Update
+    
+    Flake lock file updates:
+    
+    • Updated input 'git-hooks':
+        'github:cachix/git-hooks.nix/f451c19376071a90d8c58ab1a953c6e9840527fd' (2024-07-15)
+      → 'github:cachix/git-hooks.nix/06939f6b7ec4d4f465bf3132a05367cccbbf64da' (2024-08-05)
+    • Updated input 'nix-darwin':
+        'github:lnl7/nix-darwin/f7142b8024d6b70c66fd646e1d099d3aa5bfec49' (2024-08-02)
+      → 'github:lnl7/nix-darwin/91010a5613ffd7ee23ee9263213157a1c422b705' (2024-08-06)
+    • Updated input 'nixpkgs':
+        'github:NixOS/nixpkgs/9f918d616c5321ad374ae6cb5ea89c9e04bf3e58' (2024-07-31)
+      → 'github:NixOS/nixpkgs/cb9a96f23c491c081b38eab96d22fa958043c9fa' (2024-08-04)
+    • Updated input 'nuschtosSearch':
+        'github:NuschtOS/search/3f5abffa5f28b4ac3c9212c81c5e8d2d22876071' (2024-08-01)
+      → 'github:NuschtOS/search/aa5f6246565cc9b1e697d2c9d6ed2c842b17fff6' (2024-08-04)
+
+commit 5922a48008e5759acb63a12b2de8348ec512760f
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Sun Aug 4 11:23:12 2024 +0200
+
+    plugins/luasnip: add filetypeExtend option
+
+commit c0a8bfcc525dbf2aec81694d524d1b11464b48b2
+Author: Émile Nadeau <nadeau.emile@gmail.com>
+Date:   Mon Aug 5 11:03:45 2024 +0000
+
+    Make url in doc link
+
+commit 4d6d3bd722520ab26b924210a25f67117afb1747
+Author: Enno Richter <enno@nerdworks.de>
+Date:   Thu Aug 1 12:37:20 2024 +0200
+
+    plugins/spectre: set freeformType for engine options
+
+commit 0f7817876adc5382cd2a42c5e5b9d14a928d8022
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Sun Aug 4 11:23:36 2024 +0200
+
+    plugins/luasnip: add tests
+
+commit 25da1220ad977cd88445a055facadb4616fc9d0e
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Sun Aug 4 11:44:18 2024 +0200
+
+    plugins/luasnip: rename extraConfig to settings (more consistent with RFC-42)
+
+commit 6f7cf23b226ceaee0a2d479c505652065dfe526f
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Sun Aug 4 10:37:52 2024 +0200
+
+    plugins/gitblame: completely drop helpers
+
+commit f38400d95978fba42adc8609ad4aa381f05a7535
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sun Jul 7 01:49:24 2024 +0100
+
+    flake: disable `allow-import-from-derivation`
+    
+    Unfortunately this will print a confirmation when first using the flake:
+    
+    ```
+    do you want to allow configuration setting 'allow-import-from-derivation' to be set to 'false' (y/N)?
+    ```
+    
+    This is no different to the cachix configs though, so probably no big
+    deal.
+
+commit 3d1224a039d70098c78d263b0867352d95f2194b
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sun Aug 4 00:03:45 2024 +0100
+
+    tests/modules/output: remove IFD
+
+commit 2f85c012ced350ccdb84561c91fbf59b0838ee67
+Author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+Date:   Sat Aug 3 21:22:24 2024 +0000
+
+    flake.lock: Update
+    
+    Flake lock file updates:
+    
+    • Updated input 'flake-parts':
+        'github:hercules-ci/flake-parts/9227223f6d922fee3c7b190b2cc238a99527bbb7' (2024-07-03)
+      → 'github:hercules-ci/flake-parts/8471fe90ad337a8074e957b69ca4d0089218391d' (2024-08-01)
+    • Updated input 'home-manager':
+        'github:nix-community/home-manager/58cef3796271aaeabaed98884d4abaab5d9d162d' (2024-07-31)
+      → 'github:nix-community/home-manager/afc892db74d65042031a093adb6010c4c3378422' (2024-08-02)
+    • Updated input 'nix-darwin':
+        'github:lnl7/nix-darwin/0413754b3cdb879ba14f6e96915e5fdf06c6aab6' (2024-07-27)
+      → 'github:lnl7/nix-darwin/f7142b8024d6b70c66fd646e1d099d3aa5bfec49' (2024-08-02)
+    • Updated input 'nixpkgs':
+        'github:NixOS/nixpkgs/52ec9ac3b12395ad677e8b62106f0b98c1f8569d' (2024-07-28)
+      → 'github:NixOS/nixpkgs/9f918d616c5321ad374ae6cb5ea89c9e04bf3e58' (2024-07-31)
+    • Updated input 'nuschtosSearch':
+        'github:NuschtOS/search/16565307c267ec219c2b5d3494ba66df08e7d403' (2024-07-28)
+      → 'github:NuschtOS/search/3f5abffa5f28b4ac3c9212c81c5e8d2d22876071' (2024-08-01)
+
+commit 83a8109ec4fba838d770c3a6079b3311c3a98283
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sat Aug 3 18:35:26 2024 +0100
+
+    ci/update: make steps optional
+    
+    Allow toggling off the flake.lock or generate files steps.
+
+commit d3cb750e6ab75c58a63c4d6c011826ddf8f1bf57
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sat Aug 3 18:31:40 2024 +0100
+
+    update-scripts: move out of flake
+    
+    See the explanation in the new update-scripts/README.md file.
+
+commit 96d0a2e390128be2ea19b714d4215326abfadf83
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Sat Aug 3 10:56:01 2024 +0200
+
+    plugins/gitblame: switch to mkNeovimPlugin
+
+commit 0bc169903705c94fda7934ecc27dd9038ad5f0e9
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Fri Aug 2 01:45:45 2024 +0100
+
+    docs: call `evalModules` in one place
+
+commit 27c4c9c2105b6544fe3b88a3620430199ecdc953
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Fri Aug 2 01:26:01 2024 +0100
+
+    lib/modules: init with `specialArgs` helpers
+
+commit 491ca5cf51814c4b456eaac303510157136400da
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Thu Aug 1 18:26:38 2024 +0100
+
+    lib: provide an "extended lib" to our modules
+    
+    lib/extend-lib.nix returns a nixpkg's lib extended with our own
+    helpers.
+    
+    This is exposed as `helpers.extendedLib`, but when evaluating our
+    modules it should be assigned to `specialArgs.lib`.
+    
+    Outside of our modules you must still access our helpers via
+    `config.lib.nixvim` or `config.lib.nixvim.extendedLib`.
+    
+    Within helpers' sub-sections, `lib` is the extended lib.
+
+commit 7c39d77b9f1fbcbd8f2a575c4f2948dd54efc5c1
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Thu Aug 1 18:05:00 2024 +0100
+
+    lib/helpers: scope each subsection, but offer aliases
+
+commit bc84fda2b8f7277f350f60000f31bad0676305e5
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Thu Aug 1 17:55:03 2024 +0100
+
+    lib/options: remove `with helpers`
+
+commit 820f8d58eafd7121989fea3ae9e71f29699d856b
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Mon Jul 29 00:14:36 2024 +0200
+
+    tests/otter: add treesitter to avoid warning
+
+commit bae46eafd1dce8568042cbdee6226b1f0325a969
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Mon Jul 29 00:14:20 2024 +0200
+
+    tests/cmp-all-sources: disable the otter source as it triggers a warning when treesitter is missing
+
+commit 8024b044d612a0aa354eafa6d111ddac56f097bd
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Wed Jul 31 22:36:07 2024 +0200
+
+    tests/plugins/efmls: disable dmd test on x86_64-darwin
+    
+    https://github.com/NixOS/nixpkgs/pull/331373
+
+commit 5c149963c03bbb45f63ff58e48c0af7e7418a34e
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Wed Jul 31 13:06:53 2024 +0200
+
+    tests/colorschemes/cyberdream: remove invalid attribute 'style'
+
+commit fef6001b5db9ea4109683e09e6d948c92fee41a6
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Wed Jul 31 09:52:48 2024 +0200
+
+    flake.nix: devshell no longer uses flake-utils, unpin it
+
+commit 1e761b11bc406b109a7f89abc5d544129dd30af0
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Tue Jul 30 22:02:28 2024 +0200
+
+    generated: Update
+    
+    - Updated none-ls.nix
+    - Updated rust-analyzer.nix
+
+commit 3cd3913d451e3f8b8c14944c49bcf17f05f738d2
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Tue Jul 30 18:59:11 2024 +0200
+
+    flake.lock: Update
+
+commit 8945b3b5e336a42972448e2f07ed5bc465a40c83
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Wed Jul 31 12:54:55 2024 +0100
+
+    flake/generate-files: fix `--commit` line count
+    
+    `echo` pipes all its output at once, so `wc -l` always counts 1 line.
+    
+    See https://stackoverflow.com/questions/60954221
+
+commit 9314cd46f0f1ff756bae1ae1718c116be894930d
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Wed Jul 17 22:26:06 2024 +0300
+
+    modules/performance: add ability to byte compile nvim runtime directory
+    
+    This commit adds `performance.byteCompileLua.nvimRuntime` toggle that,
+    if enabled, byte compiles all lua files in Nvim runtime directory.
+
+commit 55ca9d235b114353af7921076aa3fb7d0acd37f5
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Wed Jul 17 21:06:30 2024 +0300
+
+    modules/performance: add ability to byte compile lua plugins
+    
+    This commit adds `performance.byteCompileLua.plugins` toggle that, if
+    enabled, byte compiles all lua files in plugins
+
+commit 44849233e00811f319976a6c88bc76612067c8a1
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Thu Jul 25 18:09:16 2024 +0300
+
+    modules/performance: add ability to byte compile lua configuration files
+    
+    This commit adds support for byte compiling lua configuration files.
+    It's enabled by default (if byte compiling is enabled at all) and can be
+    disabled with `performance.byteCompileLua.configs` toggle.
+    
+    To implement this feature `extraFiles.<name>.finalSource` internal
+    read-only option is introduced. `source` option cannot be used because
+    it's user configurable. In order to access the values of the
+    `performance.byteCompileLua` options, parent config is added to
+    specialArgs of extraFiles submodule. Then the usages of `source` option
+    changed to `finalSource` in all relevant places (filesPlugin and
+    wrappers).
+    
+    Added more helpers for various cases of byte compiling:
+    
+    * `byteCompileLuaFile` byte compiles lua file
+    * `byteCompileLuaHook` is a setup hook that byte compiles all lua files
+    * `byteCompileLuaDrv` overrides derivation by adding byteCompileLuaHook
+      to it
+    
+    Added tests to validate that extraFiles specified by various methods are
+    handled correctly. Added a separate home-manager test, that is intended
+    to validate that extraFiles propagated to wrapper modules are correctly
+    byte compiled.
+
+commit 17e89049927e72b055e082464c1eabc8983791ac
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Thu Jul 25 13:25:13 2024 +0300
+
+    modules/performance: add `performance.byteCompileLua` option
+    
+    * add `performance.byteCompileLua.enable` toggle to enable or disable
+      all byte compiling features
+    * add `performance.byteCompileLua.initLua` toggle to enable or
+      disable byte compiling of init.lua
+    * add `writeByteCompiledLua` helper for saving byte compiled lua source
+      code to the nix store
+    * `nixvim-print-init` utility is always pointed to uncompiled init.lua
+    * add tests
+
+commit 3789c696584406fdfd5e9bfcc13d41c45ae5715c
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Tue Jul 30 22:30:08 2024 +0100
+
+    flake/generate-files: use nixfmt directly
+    
+    Running `nix fmt` is unnecessary in this case.
+
+commit 0b23a4ce853d07985955b072dd8dc6ffd3c4bb68
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Tue Jul 30 22:25:03 2024 +0100
+
+    flake/generate-files: do all builds in one eval
+
+commit fc8155b5fab453c4a585a18cf1b1d9810ee97df7
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Tue Jul 30 23:57:34 2024 +0100
+
+    tests/generated: init by checking declared tools
+    
+    This moves most assertions out of generate-files and into a check
+    derivation. This should allow the CI to finish, even when there are
+    issues.
+    
+    This also properly tests efmls, which was only checked partially before.
+    
+    rust-analyzer is not covered because the existing assertions relate more
+    to edge-cases not handled by the generation script than the result it
+    builds.
+
+commit a8eceddd07f25a5eacec06b874b4c3af0cad24cc
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Wed Jul 31 11:38:55 2024 +0100
+
+    plugins/lsp/efmls: remove unused tool declarations
+
+commit ee89f7437b48c4f2823facc0695428b33a85bc49
+Author: Ughur Alakbarov <58857108+ugur-a@users.noreply.github.com>
+Date:   Tue Jul 30 18:26:30 2024 +0200
+
+    typo
+
+commit 2089eb407d8c5dbd6ca6e93d4988a439ca6446fd
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sun Jul 28 01:56:42 2024 +0100
+
+    plugins/which-key: deprecate v2 registrations
+    
+    These have been replaced in v3 with a new spec.
+    
+    As we will soon migrate which-key to `settings` options, I've named the
+    new option `settings.spec` so that we do not need to "rename" it again
+    soon.
+    
+    This commit **does not** actually add a freeform settings option.
+
+commit 2415edc0cb749bf81c9b142138c2bb705514f6cc
+Author: Thomas Stachl <i@t5.st>
+Date:   Mon Jul 29 07:24:39 2024 +0200
+
+    plugins/lsp/nextls: init
+
+commit 040bab5f55e8162b777c3c62a0404e6bbc6d8d07
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sun Jul 28 22:51:18 2024 +0100
+
+    lib/helpers: `call` with auto-args
+    
+    Define `call = callPackageWith { inherit pkgs lib helpers; }`, which can
+    be used to automatically pass the correct args into helpers files.
+    
+    `helpers` is passed in recursively.
+
+commit 0e98d9cf1e8a5b2e3165b76da9358731b3fad520
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Sun Jul 28 22:30:11 2024 +0100
+
+    lib/helpers: build recursively
+
+commit a655679eccecddee70bf43fd4ca82f91f61a5045
+Author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+Date:   Sat Jul 27 20:33:57 2024 +0000
+
+    flake.lock: Update
+    
+    Flake lock file updates:
+    
+    • Updated input 'devshell':
+        'github:numtide/devshell/cf8c7405479cfde7ea4dc815e195391d2328df10' (2024-07-25)
+      → 'github:numtide/devshell/cc8700135fb0740199ac248063f20c6b1a3c7e42' (2024-07-26)
+    • Updated input 'home-manager':
+        'github:nix-community/home-manager/304a011325b7ac7b8c9950333cd215a7aa146b0e' (2024-07-24)
+      → 'github:nix-community/home-manager/975b83ca560d17db51a66cb2b0dc0e44213eab27' (2024-07-27)
+    • Updated input 'nix-darwin':
+        'github:lnl7/nix-darwin/884f3fe6d9bf056ba0017c132c39c1f0d07d4fec' (2024-07-23)
+      → 'github:lnl7/nix-darwin/0413754b3cdb879ba14f6e96915e5fdf06c6aab6' (2024-07-27)
+    • Updated input 'nixpkgs':
+        'github:NixOS/nixpkgs/dc14ed91132ee3a26255d01d8fd0c1f5bff27b2f' (2024-07-23)
+      → 'github:NixOS/nixpkgs/b73c2221a46c13557b1b3be9c2070cc42cf01eb3' (2024-07-27)
+
+commit 59941a5300b1b13d6aac0a5115c8fc5b955b5405
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Sat Jul 27 01:39:00 2024 -0500
+
+    config-examples: fix typo
+
+commit 686507a4cb4e77643bcbabda260ee317e874d2f1
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Sat Jul 27 01:38:23 2024 -0500
+
+    config-examples: add khanelivim
+
+commit 162ae6354bbf2af5c33b09aa90e9d8d11f14462e
+Author: Noah Thornton <noahthornton15@gmail.com>
+Date:   Tue Jul 23 00:04:54 2024 -0700
+
+    plugins/lsp/jdtls: add Eclipse JDT language server for Java
+    
+    This adds the Eclipse JDT language server for Java.
+
+commit 47b6c4804f69556dc22aa2a2e64721f216b69090
+Author: Quentin Boyer <quentin+dev@familleboyer.net>
+Date:   Thu Jul 25 21:46:20 2024 +0200
+
+    github: Fix stable doc path
+
+commit 10e5066a9a794d584edbe244d2a1e643fc3aa271
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Wed Jul 24 21:09:54 2024 -0500
+
+    plugins/otter: add warning if treesitter highlighting not set
+
+commit 91130385edea1ebc46c955999f428a21df9976de
+Author: Austin Horstman <khaneliman12@gmail.com>
+Date:   Wed Jul 24 19:55:49 2024 -0500
+
+    plugins/treesitter: support unsetting keymaps
+
+commit c12e59ff7cba4f70b7428899d1af1d59666df1c6
+Author: Quentin Boyer <quentin+dev@familleboyer.net>
+Date:   Thu Jul 25 19:21:46 2024 +0200
+
+    doc: Use correct href for nuscht-search
+    
+    This commit also adds a subdirectory in the docs derivation, to have the
+    same local structure than what is uploaded on github pages.
+
+commit ac50052a49bf2d674af57136a14e660b875453bc
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Thu Jul 25 17:58:50 2024 +0200
+
+    plugins/lsp/pylsp: remove useless dependency for pylsp-rope
+
+commit 114c03685060003728bbb07ccf60cd6f4a61898c
+Author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+Date:   Thu Jul 25 15:52:16 2024 +0000
+
+    flake.lock: Update
+    
+    Flake lock file updates:
+    
+    • Updated input 'devshell':
+        'github:numtide/devshell/1ebbe68d57457c8cae98145410b164b5477761f4' (2024-06-03)
+      → 'github:numtide/devshell/cf8c7405479cfde7ea4dc815e195391d2328df10' (2024-07-25)
+    • Updated input 'home-manager':
+        'github:nix-community/home-manager/635563f245309ef5320f80c7ebcb89b2398d2949' (2024-07-21)
+      → 'github:nix-community/home-manager/304a011325b7ac7b8c9950333cd215a7aa146b0e' (2024-07-24)
+    • Updated input 'nix-darwin':
+        'github:lnl7/nix-darwin/2ae24bcafdb88fdf70b061cc8b18d070dbd9013a' (2024-07-22)
+      → 'github:lnl7/nix-darwin/884f3fe6d9bf056ba0017c132c39c1f0d07d4fec' (2024-07-23)
+    • Updated input 'nixpkgs':
+        'github:NixOS/nixpkgs/68c9ed8bbed9dfce253cc91560bf9043297ef2fe' (2024-07-21)
+      → 'github:NixOS/nixpkgs/dc14ed91132ee3a26255d01d8fd0c1f5bff27b2f' (2024-07-23)
+    • Updated input 'nuschtosSearch':
+        'github:NuschtOS/search/b5990bce952c39824169dad255ff39c8abe4ca21' (2024-07-18)
+      → 'github:NuschtOS/search/551b031e2bc0bcc9584347a8da6312e57169661d' (2024-07-21)
+    • Updated input 'treefmt-nix':
+        'github:numtide/treefmt-nix/888bfb10a9b091d9ed2f5f8064de8d488f7b7c97' (2024-07-20)
+      → 'github:numtide/treefmt-nix/8db8970be1fb8be9c845af7ebec53b699fe7e009' (2024-07-23)
+
+commit faff876ee6b45cb58b4983471623e3421ba11ce0
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Thu Jul 25 13:56:03 2024 +0100
+
+    wrappers: use `lib.nixvim` option
+    
+    Update internal usage from the deprecated `nixvim.helpers` option to the
+    new `lib.nixvim` option name.
+
+commit 4d874f6c115b59ad763838b1d12c1067844163ba
+Author: Quentin Boyer <quentin+dev@familleboyer.net>
+Date:   Wed Jul 24 22:31:16 2024 +0200
+
+    dev: Make the serve-docs command uncached
+
+commit 42a7676d5a07a222e70c9dbd38f40df4a5bca35a
+Author: traxys <quentin+dev@familleboyer.net>
+Date:   Fri Jul 19 20:14:20 2024 +0200
+
+    docs: Add an option search to our documentation
+
+commit 30ab203d56cb695dd420265b7f9499a41634347f
+Author: GGORG <GGORG0@protonmail.com>
+Date:   Wed Jul 24 13:43:08 2024 +0200
+
+    plugins/guess-indent: init
+
+commit 230f95eae00f540856029afa976789ed8b9ed1b6
+Author: GGORG <GGORG0@protonmail.com>
+Date:   Wed Jul 24 13:05:26 2024 +0200
+
+    maintainers: add GGORG
+
+commit 216d64c158da5523d5b3db0895e1345175c21502
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Mon Jul 8 05:12:24 2024 +0100
+
+    wrappers: make `helpers` available via `lib` option
+    
+    NixOS, HM, & Darwin provide a `lib` option, not to be confused with the
+    `lib` module arg.
+    
+    This option is intended for modules to define custom functions without
+    having to extend nixpkgs lib.
+    
+    The old option is renamed, if it is accessed it will print:
+    
+        trace: Obsolete option `nixvim.helpers' is used. It was renamed to `lib.nixvim'.
+
+commit 0ac10f6776c6650b18ebe45913e06b7ce1a2e2b1
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Fri Jul 19 23:08:05 2024 +0300
+
+    modules/performance: refactor after code review
+
+commit 6e2ec5ed02a60cf4c159bf923ae7566facd75e3d
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Tue Jul 16 14:45:12 2024 +0300
+
+    modules/performance: add plenary filetypes directory to default pathsToLink
+    
+    plenary.nvim is often pulled as a dependency of other plugins.
+    It has filetype definitions in `data/plenary/filetypes` directory.
+    Even though I don't think there are plugins using it instead of
+    vim.filetype, but it should be no harm to add this directory by default.
+
+commit 532b0044d05ad93fd900a9a2283591514b19bac6
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Tue Jul 16 13:25:15 2024 +0300
+
+    plugins/telescope: add compatibility with `combinePlugins`
+
+commit 5c75cfac13510bdda1f2cdb2037b4eb08620adb2
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Tue Jul 16 12:38:32 2024 +0300
+
+    plugins/telescope/fzy-native: add compatibility with `combinePlugins`
+
+commit 61caa52fc582d7f07b1c22abc00db560a2671fb1
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Tue Jul 16 12:24:56 2024 +0300
+
+    plugins/telescope/fzf-native: add compatibility with `combinePlugins`
+
+commit ce93f1724f69d064ab3ee2ffd376193024776f6c
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Tue Jul 16 11:35:02 2024 +0300
+
+    plugins/treesitter: add workaround for `performance.combinePlugins`
+
+commit 0c32f5bda54ef58f2c3f25bab3d9dbc18643e2a1
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Fri Jul 19 16:35:17 2024 +0300
+
+    modules/performance: don't combine `filesPlugin` into plugin pack
+    
+    It's expected that user may want to override some runtime files in its
+    own config directory. Do not combine it into plugin pack to avoid
+    collisions.
+
+commit e65c9590d0485410de0c091962ea27a72342b6dc
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Fri Jul 19 16:31:12 2024 +0300
+
+    modules/performance: add `combinePlugins.standalonePlugins` option
+
+commit d6bebcefa3201812e91abcf7ae843fcbdbfe7902
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Sun Jul 14 17:46:01 2024 +0300
+
+    modules/performance: handle plugin configs when combining plugins
+
+commit 27201addd787113c04e415f7fd81fcd887a06bae
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Sun Jul 14 16:10:58 2024 +0300
+
+    modules/performance: handle optional plugins when combining plugins
+
+commit f900dcd6aabe6e74f3a0ab5b865472e18b42e888
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Sun Jul 14 11:38:41 2024 +0300
+
+    modules/performance: handle python3 dependencies when combining plugins
+
+commit fdb3950c5905f8026e46a52dd73a17d7c49944f3
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Sun Jul 7 20:22:39 2024 +0300
+
+    modules/performance: add an option to combine plugins to a single plugin pack
+
+commit 119f12db27293d1642a5af8908207e151f8fef8a
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Sun Jul 7 18:50:30 2024 +0300
+
+    modules/output: avoid using global `with lib;`
+
+commit 638729936455e26dcd2a13e25b96ac79891bc9af
+Author: Nathan Felber <nathan@pascaline.org>
+Date:   Thu Apr 11 23:51:25 2024 +0200
+
+    plugins/cmake-tools: init
+
+commit a1bd7aebc69ffbf4239667d035bfb523affa0c23
+Author: Nathan Felber <nathan@pascaline.org>
+Date:   Thu Apr 11 23:47:19 2024 +0200
+
+    maintainers: add NathanFelber
+
+commit ab67ee7e8b33e788fc53d26dc6f423f9358e3e66
+Author: Antonín Říha <antonin.riha@protonmail.com>
+Date:   Wed Jul 24 00:04:05 2024 +0200
+
+    plugins/lsp/openscad-lsp: init
+    
+    Signed-off-by: Antonín Říha <antonin.riha@protonmail.com>
+
+commit 10cc58d497ab422801b68ec8cde036b521f76a50
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Tue Jul 23 00:02:30 2024 +0200
+
+    plugins/lsp/pylsp: propagatedBuildInputs -> dependencies
+
+commit 3b6d403f3972a1e8f9f283a35a88bdfcf2e924a4
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Tue Jul 23 00:01:09 2024 +0200
+
+    plugins/better-escape: switch to mkNeovimPlugin + update
+
+commit 95dade6292ee19d1f3dc937ed0e69f9c720056a4
+Author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+Date:   Fri Jul 19 19:39:04 2024 +0000
+
+    flake.lock: Update
+    
+    Flake lock file updates:
+    
+    • Updated input 'git-hooks':
+        'github:cachix/git-hooks.nix/8d6a17d0cdf411c55f12602624df6368ad86fac1' (2024-07-09)
+      → 'github:cachix/git-hooks.nix/f451c19376071a90d8c58ab1a953c6e9840527fd' (2024-07-15)
+    • Updated input 'home-manager':
+        'github:nix-community/home-manager/90ae324e2c56af10f20549ab72014804a3064c7f' (2024-07-11)
+      → 'github:nix-community/home-manager/afd2021bedff2de92dfce0e257a3d03ae65c603d' (2024-07-16)
+    • Updated input 'nix-darwin':
+        'github:lnl7/nix-darwin/5ce8503cf402cf76b203eba4b7e402bea8e44abc' (2024-07-13)
+      → 'github:lnl7/nix-darwin/a3e4a7b8ffc08c7dc1973822a77ad432e1ec3dec' (2024-07-18)
+    • Updated input 'nixpkgs':
+        'github:NixOS/nixpkgs/7e7c39ea35c5cdd002cd4588b03a3fb9ece6fad9' (2024-07-12)
+      → 'github:NixOS/nixpkgs/ad0b5eed1b6031efaed382844806550c3dcb4206' (2024-07-16)
+    • Updated input 'treefmt-nix':
+        'github:numtide/treefmt-nix/5b002f8a53ed04c1a4177e7b00809d57bd2c696f' (2024-07-12)
+      → 'github:numtide/treefmt-nix/50104496fb55c9140501ea80d183f3223d13ff65' (2024-07-19)
+
+commit 26b9647ed74215b60313739cdafabee4126edfe7
+Author: traxys <quentin+dev@familleboyer.net>
+Date:   Tue Jul 23 22:07:42 2024 +0200
+
+    dev: Introduce an editorconfig file for shfmt
+    
+    The shfmt default is tabs, this allows to match the treefmt default for
+    shfmt launched from outside nix, like from efm-lang-server within
+    neovim.
+
+commit 53f76f76b070ccc19cb82a1874c5c5e2368c8374
+Author: traxys <quentin+dev@familleboyer.net>
+Date:   Tue Jul 23 22:04:28 2024 +0200
+
+    dev: Re-evaluate direnv when a flake-module changes
+
+commit f1eaf5b617828a8c8c244d2d8248858ab1e400ab
+Author: traxys <quentin+dev@familleboyer.net>
+Date:   Tue Jul 23 22:03:37 2024 +0200
+
+    dev: Allow to pass arguments to nix in `tests`
+    
+    This can allow to pass --show-trace for example
+
+commit 1c75b414cb8b124f24c935d113a066b9dd685827
+Author: traxys <quentin+dev@familleboyer.net>
+Date:   Tue Jul 23 21:58:14 2024 +0200
+
+    dev: Allow to choose the system in `tests`
+    
+    This is done through the -s/--system <system> option
+
+commit 901e8760d02b64e83c852d019a8599fea1c376ad
+Author: Gaetan Lepage <gaetan@glepage.com>
+Date:   Mon Jul 22 23:09:18 2024 +0200
+
+    flake-modules/dev: format launch-test.sh
+
+commit 9317537848307271e536c6f28d355880515102d3
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Sun Jul 21 20:59:16 2024 +0300
+
+    modules: avoid setting empty strings to extraConfig* options
+    
+    Problem:  Some modules are setting empty strings to extraConfig* options
+              with the intention to not generate any config. But empty
+              strings are also values, so they are still concatenated in the
+              final value of extraConfig* options. This results in a
+              multiple empty strings in extraConfigs.
+    
+    Solution: Avoid using optionalString when setting values to extraConfig*
+              options. Use mkIf instead.
+    
+              This commit also fixes mkIf condition in autocmd module.
+    
+              `mkNeovimPlugin` is a special case. To avoid evaluating
+              caller's arguments mkMerge/optionalAttrs pattern is used
+              instead.
+
+commit 299d0406bb339283969907d1f171f0eec7d84c43
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Sun Jul 21 11:55:52 2024 +0300
+
+    modules/output: refactor config generation
+    
+    The motivation for this change was to avoid generating empty
+    config sections like
+    
+        vim.cmd([[
+    
+        ]])
+    
+    To make a config generation cleaner several helper functions introduced:
+    
+    * `hasContent` have been moved to helpers
+    * `concatNonEmptyLines` joins strings (which has content) separated with
+      newlines
+    * `wrapVimscriptForLua` wraps a lua string for using in Vimscript, but
+      only if the string has content, otherwise empty string is returned
+    * `wrapLuaForVimscript` wraps Vimscript for using in lua, but only if
+      the string has content, otherwise empty string is returned
+    
+    Added tests:
+    
+    * testing that all possible config sections are present in the final
+      generated config
+    * testing that the config files generated by empty `files` definitions
+      don't have any content in it
+
+commit 6dc0bda459bcfb2a38cf7b6ed1d6a5d6a8105f00
+Author: Matt Sturgeon <matt@sturgeon.me.uk>
+Date:   Mon Jul 22 13:11:31 2024 +0100
+
+    lib/to-lua: handle derivations as path strings
+    
+    Fixes #1888
+
+commit 34aa3e00e7f0b0ec44d036f5fbf1dd27825aa77b
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Sun Jul 21 11:15:45 2024 +0300
+
+    modules/filetype: ensure that the module does not set empty settings
+    
+    When setting any filetype suboption to null (or anything else guarded by
+    mkIf) it's value becomes:
+    
+        { extension = null; filename = null; pattern = null; }
+    
+    Account for that case in mkIf condition so that the option would not
+    produce empty filetype definition.
+
+commit d2f733efb4962903b77af330c4c03a63f2f72968
+Author: Sorin Iclanzan <sorin@iclanzan.com>
+Date:   Sun Jul 21 12:14:31 2024 -0400
+
+    systemModules should be systemPackages in README example
+
+commit 06261fc4720bb88fbaf646a1b2ac8f1c9da51f20
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Sun Jul 21 10:31:46 2024 +0300
+
+    modules/lsp/servers/vls: do not add filetype extension if not enabled
+
+commit 8eb5763bbbb414c432ced741c5fe8052154d0816
+Author: Stanislav Asunkin <1353637+stasjok@users.noreply.github.com>
+Date:   Sun Jul 21 09:59:04 2024 +0300
+
+    modules/lua-loader: make enable option nullable
+    
+    This avoids having the option always "defined".
+    
+    This also avoids luaLoader configuration in extra files by default.
+    Earlier `vim.loader.disable()` was always added to configs produced
+    by `files` option, effectively disabling luaLoader even if it was
+    explicitly enabled in a top-level configuration.
+
+commit 7908729711351b596160ddcdc138bb925d846f87
+Author: traxys <quentin+dev@familleboyer.net>
+Date:   Sat Jul 20 00:18:36 2024 +0200
+
+    dev: Make the tests command able to select which test to launch
+    
+    The `tests` command can either launch all tests (without any arguments),
+    a specific test with `-t/--test` or choose a test with `-i/--interactive`
+
+commit b1576362a735e06f22445f1b44d17447fdaebbf1
+Author: traxys <quentin+dev@familleboyer.net>
+Date:   Fri Jul 19 20:22:19 2024 +0200
+
+    tests: Remove the test link farm
+    
+    Fixes #1878

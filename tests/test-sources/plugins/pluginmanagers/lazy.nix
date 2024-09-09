@@ -99,6 +99,13 @@
           };
         }
 
+        # Plugin names can also be passed by themselves so long as they're
+        # defined somewhere else in the `plugins` list.
+        "oil"
+        {
+          name = "oil";
+          pkg = oil-nvim;
+        }
       ];
     };
   };
@@ -131,6 +138,7 @@
       {
         enable = true;
         plugins = [
+          # TODO: enable and set package via pkg
           # Set a custom name for `mini-nvim` and later disable it.
           {
             name = "test-mini-nvim";
@@ -142,6 +150,7 @@
             __unkeyed = "test-mini-nvim";
             enabled = false;
           }
+
           # Enable a vim plugin without specifying a custom name
           {
             pkg = vim-closer;
@@ -152,6 +161,7 @@
             pkg = vim-closer;
             enabled = false;
           }
+
           # Enable another plugin without specifying a custom name
           {
             pkg = vim-dispatch;
@@ -162,6 +172,7 @@
             __unkeyed = "vim-dispatch";
             enabled = true;
           }
+
           # Enable a plugin using it's path given to `dir`
           {
             dir = test_plugin1_path;
@@ -175,6 +186,7 @@
             dir = test_plugin1_path;
             enabled = false;
           }
+
           # Enable a plugin using it's path given to `dir`, but not giving it a
           # custom name.
           {
@@ -269,24 +281,6 @@
         }
 
         # Dependencies can be a list of names that are defined elsewhere in the
-        # list of plugins.
-        {
-          pkg = lualine-nvim;
-          dependencies = [
-            "web-dev-icons"
-            "lsp-progress"
-          ];
-        }
-        {
-          pkg = nvim-web-devicons;
-          name = "web-dev-icons";
-        }
-        {
-          pkg = lualine-lsp-progress;
-          name = "lsp-progress";
-        }
-
-        # Dependencies can be a list of names that are defined elsewhere in the
         # list of plugins. If the names given are just the default names of a
         # package they need not be explicitly defined.
         {
@@ -307,24 +301,39 @@
     test.runNvim = false;
     plugins.lazy = {
       enable = true;
-      settings = {
-        dev = {
-          fallback = false;
-        };
-      };
       plugins = [
+        # Short or long plugin URL's can be passed via the `__unkeyed` attribute.
         {
-          # TODO: check if short plugin url can be used as [1]
           "__unkeyed" = "echasnovski/mini.ai";
           name = "m.ai";
           enabled = true;
           version = false;
         }
+
+        # Short plugin URL's can't be passed via the `url` attribute, unless
+        # it's also passed to the `__unkeyed` attribute.
         {
-          url = "https://github.com/echasnovski/mini.colors";
-          name = "m.colors";
+          url = "https://github.com/norcalli/nvim-colorizer.lua";
+          name = "colorizer";
           enabled = true;
           version = false;
+        }
+
+        # Short or long plugin URL's  can be passed by themselves
+        "ggandor/lightspeed.nvim"
+        "https://github.com/ggandor/leap.nvim"
+        # long URL's can be later referenced by their short URL
+        {
+          __unkeyed = "ggandor/leap.nvim";
+          name = "leap";
+        }
+
+        # Plugin names can also be passed by themselves so long as they're
+        # defined somewhere else in the `plugins` list.
+        "oil"
+        {
+          name = "oil";
+          url = "https://github.com/stevearc/oil.nvim";
         }
       ];
     };
