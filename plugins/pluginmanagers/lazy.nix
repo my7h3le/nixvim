@@ -44,8 +44,20 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
 
           let
             cfg = config;
+            inherit (types)
+              str
+              package
+              enum
+              maybeRaw
+              attrsOf
+              anything
+              number
+              either
+              listOf
+              bool
+              eitherRecursive
+              ;
           in
-          with types;
           {
             freeformType = attrsOf anything;
             options = {
@@ -92,7 +104,7 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
               # `dependencies`. Also use `types.eitherRecursive` instead of
               # `types.either` here, as using just `types.either` also leads to
               # stack overflow. 
-              dependencies = mkNullOrOption (types.eitherRecursive lazyPluginType lazyPluginsListType) ''
+              dependencies = mkNullOrOption (eitherRecursive lazyPluginType lazyPluginsListType) ''
                 A list of plugin names or plugin specs that should be
                 loaded when the plugin loads. Dependencies are always
                 lazy-loaded unless specified otherwise. When specifying a
@@ -121,14 +133,16 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
               '';
 
               event =
-                with types;
-                mkNullOrOption (maybeRaw (either str (listOf str))) "Lazy-load on event. Events can be specified as BufEnter or with a pattern like BufEnter *.lua";
 
-              cmd = with types; mkNullOrOption (maybeRaw (either str (listOf str))) "Lazy-load on command";
+                mkNullOrOption (maybeRaw (
+                  either str (listOf str)
+                )) "Lazy-load on event. Events can be specified as BufEnter or with a pattern like BufEnter *.lua";
 
-              ft = with types; mkNullOrOption (maybeRaw (either str (listOf str))) "Lazy-load on filetype";
+              cmd = mkNullOrOption (maybeRaw (either str (listOf str))) "Lazy-load on command";
 
-              keys = with types; mkNullOrOption (maybeRaw (either str (listOf str))) "Lazy-load on key mapping";
+              ft = mkNullOrOption (maybeRaw (either str (listOf str))) "Lazy-load on filetype";
+
+              keys = mkNullOrOption (maybeRaw (either str (listOf str))) "Lazy-load on key mapping";
 
               module = mkNullOrOption (enum [ false ]) ''
                 Do not automatically load this Lua module when it's required somewhere
@@ -147,7 +161,7 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
               '';
 
               opts =
-                with types;
+
                 mkNullOrOption (maybeRaw (attrsOf anything)) ''
                   opts should be a table (will be merged with parent specs),
                   return a table (replaces parent specs) or should change a table.
