@@ -41,7 +41,7 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
       lazyPluginType =
         with types;
         types.coercedTo lazyPluginCoercableType coerceToLazyPluginSpec (
-          types.submodule (
+          submodule (
             { config, ... }:
 
             let
