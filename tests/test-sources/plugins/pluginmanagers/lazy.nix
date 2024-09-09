@@ -7,7 +7,7 @@
 # tested (See:
 # https://github.com/nix-community/nixvim/pull/2082#discussion_r1746585453).
 #
-# Also the plugins and dependency combinations used in  the tests are
+# Also the plugins and dependency combinations used in the tests are
 # arbitrary.
 
 {
@@ -316,13 +316,23 @@
           version = false;
         }
 
-        # Short or long plugin URL's  can be passed by themselves
+        # Short or long plugin URL's can be passed by themselves
         "ggandor/lightspeed.nvim"
         "https://github.com/ggandor/leap.nvim"
         # long URL's can be later referenced by their short URL
         {
           __unkeyed = "ggandor/leap.nvim";
           name = "leap";
+        }
+        # long URL's can be later referenced by their short URL
+        {
+          __unkeyed = "ggandor/leap.nvim";
+          name = "leap";
+        }
+        # Long URL's can also be refernced as is
+        {
+          __unkeyed = "https://github.com/ggandor/leap.nvim";
+          name = "lightspeed";
         }
 
         # Plugin names can also be passed by themselves so long as they're
