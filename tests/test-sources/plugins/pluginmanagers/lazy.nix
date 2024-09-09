@@ -138,36 +138,33 @@
       {
         enable = true;
         plugins = [
-          # TODO: enable and set package via pkg
-          # Set a custom name for `mini-nvim` and later disable it.
+          # Enable and then later disable a plugin using it's custom name.
           {
             name = "test-mini-nvim";
             pkg = mini-nvim;
             enabled = true;
           }
-          # Disable previously enabled `mini-nvim` using it's custom name.
           {
             __unkeyed = "test-mini-nvim";
             enabled = false;
           }
 
-          # Enable a vim plugin without specifying a custom name
+          # Enable and then later disable a plugin using `pkg`.
           {
             pkg = vim-closer;
             enabled = true;
           }
-          # Disable previously enabled plugin without specifying a custom name
           {
             pkg = vim-closer;
             enabled = false;
           }
 
-          # Enable another plugin without specifying a custom name
+          # Enable plugin using `pkg` and then later disable it using the nix
+          # package's default name.
           {
             pkg = vim-dispatch;
             enabled = true;
           }
-          # Disable previously enabled plugin just by using it's name
           {
             __unkeyed = "vim-dispatch";
             enabled = true;
