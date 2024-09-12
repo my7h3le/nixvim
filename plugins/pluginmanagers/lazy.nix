@@ -7,6 +7,19 @@ let
     mkNullOrStrLuaFnOr
     ;
   inherit (lib) types;
+
+  # The regex used in the match function matches a string containing two
+  # segments separated by a single forward slash ('/'). Each segment is
+  # composed of one or more characters that are neither newlines ('\n')
+  # nor forward slashes ('/').
+  #
+  # The pattern ensures that both segments must be non-empty and must not
+  # include line breaks or slashes within them.
+  isShortGitURL = x: lib.isStringLike x && builtins.match "[^\n/]+/[^\n/]+" (toString x) != null;
+
+  # The regex used in the match function matches any string that starts
+  # with either `https://` or `http://`.
+  isGitURL = x: lib.isStringLike x && builtins.match "https?://.*" (toString x) != null;
 in
 lib.nixvim.neovim-plugin.mkNeovimPlugin {
   name = "lazy";
@@ -18,76 +31,71 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
     my7h3le
   ];
 
+  settingsOptions = with types; {
+    git.url_format = defaultNullOpts.mkStr "https://github.com/%s.git" ''
+      The default url format that `lazy.nvim` expects short plugin urls to be
+      in. (See: upstream docs for `config.git.url_format` defined here
+      https://lazy.folke.io/configuration);
+    '';
+
+    dev.fallback = defaultNullOpts.mkBool false ''
+      When false, `lazy.nvim` won't try to use git to fetch local plugins that
+      don't exist.
+    '';
+
+    install.missing = defaultNullOpts.mkBool false ''
+      When false, `lazy.nvim` won't try to install missing plugins on startup.
+      Setting this to true won't increase startup time.
+    '';
+  };
+
   extraOptions =
     let
-      # A plugin defined in the `nixvim.plugins.lazy.plugins` list can either
-      # be of `types.package` or `types.str`. Depending on the type of the
-      # given plugin this plugin will conditionally return an appropriate
-      # plugin spec.
-      coerceToLazyPluginSpec =
-        plugin:
-        if lib.isDerivation plugin then
-          {
-            dir = lib.mkDefault "${plugin}";
-            name = lib.mkDefault "${lib.getName plugin}";
-          }
-        else if lib.isString plugin then
-          { __unkeyed = lib.mkDefault plugin; }
-        else
-          plugin;
+      shortGitURL = lib.mkOptionType {
+        name = "shorGitURL";
+        description = "a short git url of the form `owner/repo`";
+        descriptionClass = "noun";
+        check = isShortGitURL;
+        merge = lib.mergeEqualOption;
+      };
 
-      lazyPluginCoercibleType = with types; either str package;
+      gitURL = lib.mkOptionType {
+        name = "gitURL";
+        description = "a git url";
+        descriptionClass = "noun";
+        check = isGitURL;
+        merge = lib.mergeEqualOption;
+      };
+
+      lazyPluginSourceType =
+        with types;
+        oneOf [
+          package
+          path
+          shortGitURL
+          gitURL
+        ];
 
       lazyPluginType =
         with types;
-        types.coercedTo lazyPluginCoercibleType coerceToLazyPluginSpec (
+        types.coercedTo lazyPluginSourceType (src: { source = src; }) (
           submodule (
             { config, ... }:
 
-            let
-              cfg = config;
-            in
             {
               freeformType = attrsOf anything;
               options = {
-                __unkeyed = mkNullOrOption str ''
-                  The "__unkeyed" attribute can either be one of:
+                source = mkNullOrOption lazyPluginSourceType ''
+                  The `source` attribute can either be one of:
 
                     - a local plugin directory path.
                     - a full plugin url.
                     - a short plugin url.
-                    - a custom name for a plugin.
 
                   If a short plugin url is given e.g. "echasnovski/mini.ai" it
                   will be expanded using `plugins.lazy.settings.git.url_format`
-
-                  If a custom name for a plugin is given, the plugin must be
-                  defined somewhere else in the list of plugins. For example:
-
-                  ```nix
-                  plugins.lazy.plugins = with pkgs.vimPlugins; [
-                    # Custom name for vim plugin
-                    "oil"
-
-                    # The plugin gets defined by using the custom name that was
-                    # previously given.
-                    {
-                      name = "oil";
-                      pkg = oil-nvim;
-                    }
-                  ];
                   ```
                 '';
-
-                dir = mkNullOrOption str ''
-                  A directory pointing to a local plugin path e.g. "~/plugins/trouble.nvim".
-                '';
-
-                url = mkNullOrOption str "A custom git url where the plugin is hosted";
-
-                pkg = mkNullOrOption package "Vim plugin to install";
-
-                name = mkNullOrOption str "Name of the plugin to install";
 
                 dev = defaultNullOpts.mkBool false ''
                   When true, `lazy.nvim` will look for this plugin in the local
@@ -218,9 +226,6 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
                   called. (See: https://lazy.folke.io/spec#spec-setup)
                 '';
               };
-
-              config.name = lib.mkIf (cfg.pkg != null) (lib.mkDefault "${lib.getName cfg.pkg}");
-              config.dir = lib.mkIf (cfg.pkg != null) (lib.mkDefault "${cfg.pkg}");
             }
           )
         );
@@ -238,27 +243,21 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
       };
     };
 
-  extraConfig =
-    cfg:
-    let
-      # The `pkg` property isn't a part of the `lazy.nvim` plugin spec, while
-      # it shouldn't do any harm but it does take up unnecessary space in the
-      # init.lua file. Since we're done using it we will strip it from the
-      # final list of specs.
-      removePkgAttrFromPlugin =
-        plugin:
-        builtins.removeAttrs plugin [ "pkg" ]
-        // lib.optionalAttrs (((plugin.dependencies or null) != null) && lib.isList plugin.dependencies) {
-          dependencies = map removePkgAttrFromPlugin plugin.dependencies;
-        };
-
-      removePkgAttrFromPlugins = plugins: map removePkgAttrFromPlugin plugins;
-    in
-    {
-      extraPackages = [
-        cfg.gitPackage
-        cfg.luarocksPackage
-      ];
-      plugins.lazy.settings.spec = removePkgAttrFromPlugins cfg.plugins;
-    };
+  extraConfig = cfg: {
+    extraPackages = [
+      cfg.gitPackage
+      cfg.luarocksPackage
+    ];
+    plugins.lazy.settings.spec = map (
+      plugin:
+      if ((plugin.source or null) != null) then
+        lib.removeAttrs plugin [ "source" ]
+        // lib.optionalAttrs (lib.isDerivation plugin.source) { dir = "${plugin.source}"; }
+        // lib.optionalAttrs (lib.isPath plugin.source) { dir = plugin.source; }
+        // lib.optionalAttrs (isShortGitURL plugin.source) { __unkeyed = plugin.source; }
+        // lib.optionalAttrs (isGitURL plugin.source) { url = plugin.source; }
+      else
+        plugin
+    ) cfg.plugins;
+  };
 }
