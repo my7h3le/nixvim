@@ -133,6 +133,54 @@
       ];
     };
   };
+
+  plugins-with-dependencies = {
+    plugins.lazy = {
+      enable = true;
+      plugins = with pkgs.vimPlugins; [
+        # Plugins can have dependencies on other plugins
+        {
+          source = completion-nvim;
+          optional = true;
+          dependencies = [
+            {
+              source = vim-vsnip;
+              optional = true;
+            }
+            {
+              source = vim-vsnip-integ;
+              optional = true;
+            }
+          ];
+        }
+
+        # Use dependency and run lua function after load
+        {
+          source = nvim-colorizer-lua;
+          dependencies = [ nvim-cursorline ];
+          config = ''
+            function()
+              require("nvim-cursorline").setup{}
+            end '';
+        }
+
+        # Dependencies can be a single package
+        {
+          source = LazyVim;
+          dependencies = trouble-nvim;
+        }
+
+        # Dependencies can be multiple packages
+        {
+          source = nvim-cmp;
+          dependencies = [
+            cmp-cmdline
+            cmp-vsnip
+          ];
+        }
+      ];
+    };
+  };
 }
 
 # disabling_plugins = {
@@ -205,99 +253,6 @@
 #       ];
 #
 #     };
-# };
-
-# plugins-with-dependencies = {
-#   plugins.lazy = {
-#     enable = true;
-#     plugins = with pkgs.vimPlugins; [
-#       # Plugins can have dependencies on other plugins
-#       {
-#         source = completion-nvim;
-#         optional = true;
-#         dependencies = [
-#           {
-#             source = vim-vsnip;
-#             optional = true;
-#           }
-#           {
-#             source = vim-vsnip-integ;
-#             optional = true;
-#           }
-#         ];
-#       }
-#
-#       # Use dependency and run lua function after load
-#       {
-#         source = nvim-colorizer-lua;
-#         dependencies = [ nvim-cursorline ];
-#         config = ''
-#           function()
-#             require("nvim-cursorline").setup{}
-#           end '';
-#       }
-#
-#       # Dependencies can be a single package
-#       {
-#         source = LazyVim;
-#         dependencies = trouble-nvim;
-#       }
-#
-#       # Dependencies can be multiple packages
-#       {
-#         source = nvim-cmp;
-#         dependencies = [
-#           cmp-cmdline
-#           cmp-vsnip
-#         ];
-#       }
-#
-#       # Dependencies can be a single name that is defined elsewhere
-#       {
-#         source = nvim-autopairs;
-#         dependencies = "luasnip";
-#       }
-#       {
-#         name = "luasnip";
-#         source = luasnip;
-#       }
-#
-#       # Dependencies can be a list of names that are defined elsewhere
-#       {
-#         source = nvim-lightbulb;
-#         dependencies = [
-#           "nvim-lspconfig"
-#           "cmp-nvim-lua"
-#           "cmp-nvim-lsp"
-#         ];
-#       }
-#       {
-#         source = nvim-lspconfig;
-#         name = "nvim-lspconfig";
-#       }
-#       {
-#         source = cmp-nvim-lua;
-#         name = "cmp-nvim-lua";
-#       }
-#       {
-#         source = cmp-nvim-lsp;
-#         name = "cmp-nvim-lsp";
-#       }
-#
-#       # Dependencies can be a list of names that are defined elsewhere in the
-#       # list of plugins. If the names given are just the default names of a
-#       # package they need not be explicitly defined.
-#       {
-#         source = nui-nvim;
-#         dependencies = [
-#           "nvim-web-devicons"
-#           "lsp-colors.nvim"
-#         ];
-#       }
-#       nvim-web-devicons
-#       lsp-colors-nvim
-#     ];
-#   };
 # };
 
 # local-plugin-sourceectory-plugins = {

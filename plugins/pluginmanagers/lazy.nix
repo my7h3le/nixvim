@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib.nixvim)
     defaultNullOpts
@@ -20,6 +25,8 @@ let
   # The regex used in the match function matches any string that starts
   # with either `https://` or `http://`.
   isGitURL = x: lib.isStringLike x && builtins.match "https?://.*" (toString x) != null;
+
+  inherit (config) isDocs;
 in
 lib.nixvim.neovim-plugin.mkNeovimPlugin {
   name = "lazy";
@@ -136,14 +143,31 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
                 # `dependencies`. Also use `types.eitherRecursive` instead of
                 # `types.either` here, as using just `types.either` also leads
                 # to stack overflow. 
-                dependencies = mkNullOrOption (eitherRecursive lazyPluginType lazyPluginsListType) ''
-                  A list of plugin names or plugin specs that should be
-                  loaded when the plugin loads. Dependencies are always
-                  lazy-loaded unless specified otherwise. When specifying a
-                  name, make sure the plugin spec has been defined somewhere
-                  else. This can also be a single string such as for a short
-                    plugin url (See: https://lazy.folke.io/spec).
-                '';
+                dependencies =
+                  let
+                    lazyPluginDependenciesType =
+                      if isDocs then
+                        # Use a stub type for documentation purposes
+                        # We don't need to repeat all the plugin-type sub-options again in the docs
+                        # It'd also be infinitely recursive
+                        lib.mkOptionType {
+                          description = "plugin submodule";
+                          descriptionClass = "noun";
+                          check = throw "should not be used";
+                          merge = throw "should not be used";
+                        }
+                      else
+                        # NOTE: use attrsOf for the LHS, because coercedTo only supports submodules on the RHS
+                        types.coercedTo (either (attrsOf anything) lazyPluginSourceType) lib.toList (listOf lazyPluginType);
+                  in
+                  mkNullOrOption lazyPluginDependenciesType ''
+                    A list of plugin names or plugin specs that should be
+                    loaded when the plugin loads. Dependencies are always
+                    lazy-loaded unless specified otherwise. When specifying a
+                    name, make sure the plugin spec has been defined somewhere
+                    else. This can also be a single string such as for a short
+                      plugin url (See: https://lazy.folke.io/spec).
+                  '';
 
                 init = mkNullOrLuaFn "init functions are always executed during startup";
 
@@ -248,16 +272,21 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
       cfg.gitPackage
       cfg.luarocksPackage
     ];
-    plugins.lazy.settings.spec = map (
-      plugin:
-      if ((plugin.source or null) != null) then
-        lib.removeAttrs plugin [ "source" ]
-        // lib.optionalAttrs (lib.isDerivation plugin.source) { dir = "${plugin.source}"; }
-        // lib.optionalAttrs (lib.isPath plugin.source) { dir = plugin.source; }
-        // lib.optionalAttrs (isShortGitURL plugin.source) { __unkeyed = plugin.source; }
-        // lib.optionalAttrs (isGitURL plugin.source) { url = plugin.source; }
-      else
-        plugin
-    ) cfg.plugins;
+    plugins.lazy.settings.spec =
+      let
+        pluginToSpec =
+          plugin:
+          lib.removeAttrs plugin [ "source" ]
+          // lib.mkIf ((plugin.source or null) != null) (
+            lib.optionalAttrs (lib.isDerivation plugin.source) { dir = "${plugin.source}"; }
+            // lib.optionalAttrs (lib.isPath plugin.source) { dir = plugin.source; }
+            // lib.optionalAttrs (isShortGitURL plugin.source) { __unkeyed = plugin.source; }
+            // lib.optionalAttrs (isGitURL plugin.source) { url = plugin.source; }
+          )
+          // lib.mkIf ((plugin.dependencies or null) != null) {
+            dependencies = map pluginToSpec plugin.dependencies;
+          };
+      in
+      map pluginToSpec cfg.plugins;
   };
 }
