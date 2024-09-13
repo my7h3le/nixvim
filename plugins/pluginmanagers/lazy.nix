@@ -151,6 +151,7 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
                         # We don't need to repeat all the plugin-type sub-options again in the docs
                         # It'd also be infinitely recursive
                         lib.mkOptionType {
+                          name = "pluginDependencies";
                           description = "plugin submodule";
                           descriptionClass = "noun";
                           check = throw "should not be used";
