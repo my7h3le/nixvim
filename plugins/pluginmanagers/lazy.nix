@@ -107,6 +107,8 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
                   '';
                 };
 
+                name = mkNullOrOption str "Name of the plugin to install";
+
                 dev = defaultNullOpts.mkBool false ''
                   When true, `lazy.nvim` will look for this plugin in the local
                   plugin directory defined at `plugin.lazy.settings.dev.path`.
