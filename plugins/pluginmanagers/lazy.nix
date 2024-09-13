@@ -284,6 +284,15 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
       cfg.gitPackage
       cfg.luarocksPackage
     ];
-    plugins.lazy.settings.spec = cfg.plugins;
+    plugins.lazy.settings.spec =
+      let
+        pluginToSpec =
+          plugin:
+          lib.removeAttrs plugin [ "source" ]
+          // lib.optionalAttrs ((plugin.dependencies or null) != null) {
+            dependencies = map pluginToSpec plugin.dependencies;
+          };
+      in
+      map pluginToSpec cfg.plugins;
   };
 }
