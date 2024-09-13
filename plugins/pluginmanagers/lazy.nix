@@ -92,17 +92,20 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
             {
               freeformType = attrsOf anything;
               options = {
-                source = mkNullOrOption lazyPluginSourceType ''
-                  The `source` attribute can either be one of:
+                source = lib.mkOption {
+                  type = lazyPluginSourceType;
+                  description = ''
+                    The `source` attribute can either be one of:
 
-                    - a local plugin directory path.
-                    - a full plugin url.
-                    - a short plugin url.
+                      - a local plugin directory path.
+                      - a full plugin url.
+                      - a short plugin url.
 
-                  If a short plugin url is given e.g. "echasnovski/mini.ai" it
-                  will be expanded using `plugins.lazy.settings.git.url_format`
-                  ```
-                '';
+                    If a short plugin url is given e.g. "echasnovski/mini.ai" it
+                    will be expanded using `plugins.lazy.settings.git.url_format`
+                    ```
+                  '';
+                };
 
                 dev = defaultNullOpts.mkBool false ''
                   When true, `lazy.nvim` will look for this plugin in the local
