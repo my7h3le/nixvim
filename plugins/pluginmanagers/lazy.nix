@@ -85,7 +85,7 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
 
       lazyPluginType =
         with types;
-        types.coercedTo lazyPluginSourceType (src: { source = src; }) (
+        types.coercedTo lazyPluginSourceType (source: { inherit source; }) (
           submodule (
             { config, ... }:
 
