@@ -284,7 +284,7 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
             (
               lib.removeAttrs plugin [ "source" ]
               // lib.optionalAttrs (lib.isDerivation plugin.source) { dir = "${plugin.source}"; }
-              // lib.optionalAttrs (lib.isPath plugin.source) { dir = plugin.source; }
+              // lib.optionalAttrs (lib.isPath plugin.source) { dir = "${plugin.source}"; }
               // lib.optionalAttrs (isShortGitURL plugin.source) { __unkeyed = plugin.source; }
               // lib.optionalAttrs (isGitURL plugin.source) { url = plugin.source; }
               // lib.optionalAttrs ((plugin.dependencies or null) != null) {
