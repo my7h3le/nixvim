@@ -256,6 +256,12 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
                   called. (See: https://lazy.folke.io/spec#spec-setup)
                 '';
               };
+
+              config.name =
+                if (lib.isDerivation config.source) then
+                  lib.mkDefault "${lib.getName config.source}"
+                else
+                  "${builtins.baseNameOf config.source}";
             }
           )
         );
@@ -282,12 +288,7 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
       let
         pluginToSpec =
           plugin:
-          lib.optionalAttrs (lib.isDerivation plugin.source) {
-            name = "${lib.getName plugin.source}";
-            dir = "${plugin.source}";
-          }
-          // lib.optionalAttrs (lib.isPath plugin.source) {
-            name = "${builtins.baseNameOf plugin.source}";
+          lib.optionalAttrs (lib.isDerivation plugin.source || lib.isPath plugin.source) {
             dir = "${plugin.source}";
           }
           // lib.optionalAttrs (isShortGitURL plugin.source) {
