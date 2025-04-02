@@ -95,6 +95,15 @@
           event = "VimEnter";
         }
 
+        # Load on key mapping
+        {
+          source = neo-tree-nvim;
+          keys = {
+            key = "<leader>ft";
+            # action = "<cmd>Neotree toggle<cr>";
+          };
+        }
+
         # Load on a combination of conditions: specific filetypes or commands
         {
           source = ale;
@@ -186,7 +195,7 @@
     plugins.lazy = {
       enable = true;
       plugins = [
-        # A single plugin url's can be passed by itself to `dependencies` 
+        # A single plugin url's can be passed by itself to `dependencies`
         {
           source = "kristijanhusak/vim-dadbod-completion";
           dependencies = "kristijanhusak/vim-dadbod";
@@ -215,49 +224,43 @@
   };
 
   disabling-plugins = {
-    plugins.lazy =
-      with pkgs.vimPlugins;
-      let
-        test_plugin1_path = "${yanky-nvim}";
-        test_plugin2_path = "${whitespace-nvim}";
-      in
-      {
-        enable = true;
-        plugins = [
-          # Enable and then later disable a plugin using it's custom name.
-          {
-            name = "mini.ai";
-            source = mini-nvim;
-            enabled = true;
-          }
-          {
-            name = "mini.ai";
-            enabled = false;
-          }
+    plugins.lazy = with pkgs.vimPlugins; {
+      enable = true;
+      plugins = [
+        # Enable and then later disable a plugin using it's custom name.
+        {
+          name = "mini.ai";
+          source = mini-nvim;
+          enabled = true;
+        }
+        {
+          name = "mini.ai";
+          enabled = false;
+        }
 
-          # Enable and then later disable a plugin using `source`.
-          {
-            source = vim-closer;
-            enabled = true;
-          }
-          {
-            source = vim-closer;
-            enabled = false;
-          }
+        # Enable and then later disable a plugin using `source`.
+        {
+          source = vim-closer;
+          enabled = true;
+        }
+        {
+          source = vim-closer;
+          enabled = false;
+        }
 
-          # Enable plugin using `source` and then later disable it using the nix
-          # package's default name.
-          {
-            source = vim-dispatch;
-            enabled = true;
-          }
-          {
-            name = "vim-dispatch";
-            source = vim-dispatch;
-            enabled = true;
-          }
-        ];
-      };
+        # Enable plugin using `source` and then later disable it using the nix
+        # package's default name.
+        {
+          source = vim-dispatch;
+          enabled = true;
+        }
+        {
+          name = "vim-dispatch";
+          source = vim-dispatch;
+          enabled = true;
+        }
+      ];
+    };
   };
 
   local-directory-plugins = {
@@ -300,15 +303,18 @@
           }
           # local plugins can have dependencies on other plugins
           {
-            name = "completion.nvim";
+            # Note: the name of the plugin has to correspond to the name of a
+            # plugin subdirectory under the directory denoted by
+            # `plugins.lazy.settings.dev.path`
+            name = "completion-nvim";
             dev = true;
             dependencies = [
               {
                 dev = true;
-                name = "vim.vsnip";
+                name = "vim-vsnip";
               }
               {
-                name = "vim.vsnip.integ";
+                name = "vim-vsnip-integ";
                 dev = true;
               }
             ];

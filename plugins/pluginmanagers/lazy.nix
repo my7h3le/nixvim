@@ -1,3 +1,10 @@
+# TODO: add lazy loading on keys
+# TODO: handle test cases for lazy loading on keys
+# TODO: cleanup test cases
+# TODO: make type a strict type instead of any string
+# TODO: have a name option, and write a test case for disabling a plugin by custom name
+# TODO add better descriptions
+#
 {
   config,
   lib,
@@ -7,6 +14,7 @@
 let
   inherit (lib.nixvim)
     defaultNullOpts
+    keymaps
     mkNullOrOption
     mkNullOrLuaFn
     mkNullOrStrLuaFnOr
@@ -28,9 +36,9 @@ let
 
   inherit (config) isDocs;
 in
-lib.nixvim.neovim-plugin.mkNeovimPlugin {
+lib.nixvim.plugins.mkNeovimPlugin {
   name = "lazy";
-  originalName = "lazy.nvim";
+  packPathName = "lazy.nvim";
 
   package = lib.mkPackageOption pkgs [
     "vimPlugins"
@@ -218,7 +226,21 @@ lib.nixvim.neovim-plugin.mkNeovimPlugin {
                   ```
                 '';
 
-                keys = mkNullOrOption (maybeRaw (either str (listOf str))) "Lazy-load on key mapping";
+                keys = mkNullOrOption (maybeRaw (oneOf [
+                  str
+                  (listOf str)
+                  (listOf attrs)
+                ])) "Lazy-load on key mapping";
+                # keys =
+                #   mkNullOrOption
+                #     (keymaps.mkMapOptionSubmodule {
+                #       defaults = {
+                #         action = "";
+                #       };
+                #     })
+                #     ''
+                #       keymap blah
+                #     '';
 
                 module = mkNullOrOption (enum [ false ]) ''
                   Do not automatically load this Lua module when it's required somewhere.
