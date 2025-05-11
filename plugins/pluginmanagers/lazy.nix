@@ -4,7 +4,9 @@
 # TODO: make type a strict type instead of any string
 # TODO: have a name option, and write a test case for disabling a plugin by custom name
 # TODO add better descriptions
-#
+# TODO handle test case for local plugin directory packages that are not
+# derivations, ie when a path is specified to source
+# TODO use custom keymap datastructure implementation
 {
   config,
   lib,
@@ -50,7 +52,7 @@ lib.nixvim.plugins.mkNeovimPlugin {
     my7h3le
   ];
 
-  settingsOptions = with types; {
+  settingsOptions = {
     git.url_format = defaultNullOpts.mkStr "https://github.com/%s.git" ''
       The default url format that `lazy.nvim` expects short plugin urls to be
       in. (See: upstream docs for `config.git.url_format` defined here
@@ -226,11 +228,29 @@ lib.nixvim.plugins.mkNeovimPlugin {
                   ```
                 '';
 
-                keys = mkNullOrOption (maybeRaw (oneOf [
-                  str
-                  (listOf str)
-                  (listOf attrs)
-                ])) "Lazy-load on key mapping";
+                # keys = mkNullOrOption (types.listOf keymaps.mkMapOptionSubmodule) "Lazy-load on key mapping";
+                keys = mkNullOrOption (types.listOf (
+                  keymaps.mkMapOptionSubmodule {
+                    defaults = {
+                      mode = "n";
+                    };
+                    # HACK: with how `mkMapOptionSubmodule` is currently
+                    # defined, mode will keep being set to default value
+                    # denoted by `defaults.mode`, and the user can not override
+                    # it without this workaround.
+                    extraOptions = {
+                      # TODO: add ft option
+                      mode = keymaps.mkModeOption "n";
+                    };
+                  }
+                )) "Lazy-load on key mapping";
+
+                # keys = mkNullOrOption (types.listOf keymaps.deprecatedMapOptionSubmodule) "Lazy-load on key mapping";
+                # keys = mkNullOrOption (maybeRaw (oneOf [
+                #   str
+                #   (listOf str)
+                #   (listOf attrs)
+                # ])) "Lazy-load on key mapping";
                 # keys =
                 #   mkNullOrOption
                 #     (keymaps.mkMapOptionSubmodule {
@@ -326,6 +346,20 @@ lib.nixvim.plugins.mkNeovimPlugin {
       # upstream `lazy.nvim` plugin spec i.e. ([1]|dir|url). After which the
       # `source` attribute itself will be stripped.
       let
+        convertToLazyKeyMappingType =
+          km:
+          {
+            __unkeyed-1 = km.key;
+          }
+          // lib.optionalAttrs (lib.hasAttr "action" km) { __unkeyed-2 = km.action; }
+          // lib.optionalAttrs (lib.hasAttr "mode" km) { mode = km.mode; }
+          // lib.optionalAttrs (lib.hasAttr "ft" km) { mode = km.ft; }
+          // lib.removeAttrs km [
+            "action"
+            "mode"
+            "ft"
+          ];
+
         pluginToSpec =
           plugin:
           lib.concatMapAttrs (
@@ -364,6 +398,9 @@ lib.nixvim.plugins.mkNeovimPlugin {
             # value instead of an extrapolated default.
             else if (key == "url" && value != null) then
               { url = value; }
+            # If the 'keys' option is given, we need to explicitly convert that into a form that `lazy.nvim` expects.
+            else if (key == "keys" && value != null) then
+              { keys = map convertToLazyKeyMappingType value; }
             # Preserve all other key value pair mappings, this also handles
             # freeform options.
             else
