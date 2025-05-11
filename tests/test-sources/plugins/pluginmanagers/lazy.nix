@@ -98,10 +98,34 @@
         # Load on key mapping
         {
           source = neo-tree-nvim;
-          keys = {
-            key = "<leader>ft";
-            # action = "<cmd>Neotree toggle<cr>";
-          };
+          keys = [
+            {
+              action = "<cmd>make<CR>";
+              key = "<C-m>";
+              mode = [
+                "v"
+                "n"
+              ];
+              ft = [
+                "*.txt"
+                "*.cpp"
+              ];
+              options = {
+                silent = true;
+              };
+            }
+          ];
+        }
+
+        # Load on key mapping without specifying action
+        {
+          source = markdown-preview-nvim;
+          cmd = "MarkdownPreview";
+          keys = [
+            {
+              key = "<C-g>";
+            }
+          ];
         }
 
         # Load on a combination of conditions: specific filetypes or commands
@@ -122,12 +146,6 @@
             "tex"
           ];
           cmd = "ALEEnable";
-        }
-
-        # Plugins can have post-install/update hooks
-        {
-          source = markdown-preview-nvim;
-          cmd = "MarkdownPreview";
         }
 
         # Post-install/update hook with neovim command

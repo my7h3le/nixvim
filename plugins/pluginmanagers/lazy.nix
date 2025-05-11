@@ -1,4 +1,3 @@
-# TODO: add lazy loading on keys
 # TODO: handle test cases for lazy loading on keys
 # TODO: cleanup test cases
 # TODO: make type a strict type instead of any string
@@ -6,7 +5,6 @@
 # TODO add better descriptions
 # TODO handle test case for local plugin directory packages that are not
 # derivations, ie when a path is specified to source
-# TODO use custom keymap datastructure implementation
 {
   config,
   lib,
@@ -228,7 +226,7 @@ lib.nixvim.plugins.mkNeovimPlugin {
                   ```
                 '';
 
-                # keys = mkNullOrOption (types.listOf keymaps.mkMapOptionSubmodule) "Lazy-load on key mapping";
+                # TODO: add better description here
                 keys = mkNullOrOption (types.listOf (
                   keymaps.mkMapOptionSubmodule {
                     defaults = {
@@ -239,28 +237,16 @@ lib.nixvim.plugins.mkNeovimPlugin {
                     # denoted by `defaults.mode`, and the user can not override
                     # it without this workaround.
                     extraOptions = {
-                      # TODO: add ft option
                       mode = keymaps.mkModeOption "n";
+                      action = mkNullOrOption (maybeRaw str) ''
+                        The action to execute.
+                      '';
+                      ft = mkNullOrOption (either (maybeRaw str) (listOf (maybeRaw str))) ''
+                        Make the keybind trigger for only certain file type/s.
+                      '';
                     };
                   }
                 )) "Lazy-load on key mapping";
-
-                # keys = mkNullOrOption (types.listOf keymaps.deprecatedMapOptionSubmodule) "Lazy-load on key mapping";
-                # keys = mkNullOrOption (maybeRaw (oneOf [
-                #   str
-                #   (listOf str)
-                #   (listOf attrs)
-                # ])) "Lazy-load on key mapping";
-                # keys =
-                #   mkNullOrOption
-                #     (keymaps.mkMapOptionSubmodule {
-                #       defaults = {
-                #         action = "";
-                #       };
-                #     })
-                #     ''
-                #       keymap blah
-                #     '';
 
                 module = mkNullOrOption (enum [ false ]) ''
                   Do not automatically load this Lua module when it's required somewhere.
@@ -353,7 +339,7 @@ lib.nixvim.plugins.mkNeovimPlugin {
           }
           // lib.optionalAttrs (lib.hasAttr "action" km) { __unkeyed-2 = km.action; }
           // lib.optionalAttrs (lib.hasAttr "mode" km) { mode = km.mode; }
-          // lib.optionalAttrs (lib.hasAttr "ft" km) { mode = km.ft; }
+          // lib.optionalAttrs (lib.hasAttr "ft" km) { ft = km.ft; }
           // lib.removeAttrs km [
             "action"
             "mode"
