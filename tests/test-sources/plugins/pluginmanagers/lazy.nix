@@ -227,6 +227,15 @@
     plugins.lazy = {
       enable = true;
       plugins = [
+        # A short git plugin url can be in the `plugins.lazy.plugins` list
+        "echasnovski/mini.ai"
+        # A full git plugin url can be in the `plugins.lazy.plugins` list
+        "https://github.com/folke/snacks.nvim"
+
+        # A directory path can also be in the `plugins.lazy.plugins` list. The
+        # path used here is random and doesn't exist, it is here to purely test
+        # module evaluation as neovim isn't being ran for these set of tests.
+        "/tmp/snacks-nvim"
         # A single plugin url's can be passed by itself to `dependencies`
         {
           source = "kristijanhusak/vim-dadbod-completion";
@@ -295,7 +304,7 @@
     };
   };
 
-  local-directory-plugins = {
+  dev-path-plugins = {
     plugins.lazy =
       with pkgs.vimPlugins;
       let

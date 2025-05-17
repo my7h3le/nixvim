@@ -1,4 +1,7 @@
 # TODO: add function (_, opts) docs
+# TODO add any missing options that are present in upstream lazy.nvim but not here
+# TODO remove trailing space in descriptions
+# TODO reflow all descriptions
 {
   config,
   lib,
@@ -103,47 +106,102 @@ lib.nixvim.plugins.mkNeovimPlugin {
               source = mkNullOrOption lazyPluginSourceType ''
                 The `source` option i.e. `plugins.lazy.plugins.<plugin>.source` is just
                 a convenience nixvim option that makes it easier to specify a plugin
-                source whether it be a:
+                source, whether it be a:
 
                   - nix package
                   - directory path
                   - git url
                   - short git url of the form `owner/repo`
 
-                and the `source` option itself is not a part of the upstream
+                The `source` option itself is not a part of the upstream
                 `lazy.nvim` plugin spec (See: https://lazy.folke.io/spec).
 
-                As a result the values given to `source` need to be mapped to
+                As a result the values given to `source` will be mapped to
                 properties in the upstream `lazy.nvim` plugin spec i.e.
                 ([1]|dir|url). After which the `source` attribute itself will
-                be stripped from the final lua config.
+                automatically be stripped from the final lua config.
                 ```
               '';
 
-              # TODO: rework 3rd paragraph of this, make sure you add the fact
-              # that with custom name it has to be defined somewhere else in
-              # the list
               name = mkNullOrOption str ''
-                A custom name for the plugin used for the local plugin
-                directory and as the display name. By default nixvim will set
-                a default value for this depending on what was specified to
+                A custom name used for the the plugin's local plugin directory,
+                and as the display name. By default nixvim will set a default
+                value for this depending on what was specified to
                 `plugins.lazy.plugins.<plugin>.source`, namely if a nix package
-                was given to `plugins.lazy.plugins.<plugin>.source` then name
-                will default to the nix package's name, and if a git url or a
-                short git url was specified, then name will default to the base
-                name of that url.
+                was given to `plugins.lazy.plugins.<plugin>.source` then `name`
+                will default to the nix package's package name, and if a git
+                url or a short git url was specified, then `name` will default
+                to the base name of that url.
 
                 It is also worth mentioning that a plugin can have the option
                 `plugins.lazy.plugins.<plugin>.name` defined but not have
-                `plugins.lazy.plugins.<plugin>.source` defined.
+                `plugins.lazy.plugins.<plugin>.source` defined. In this case if
+                other attributes are given to the plugin spec, they will be
+                applied or merged with the original plugin definition. This is
+                particularly useful for plugins that bundle multiple modules
+                (e.g. mini-nvim, which includes mini-ai, mini-trailspace,
+                etc.), where you need to modify options for individual modules
+                without affecting the entire bundle. However, when only
+                `plugins.lazy.plugins.<plugin>.name` is given but no
+                `plugins.lazy.plugins.<plugin>.source` then there must be
+                another plugin spec defined in the `plugins.lazy.plugins` list
+                that references that set `name` somehow. This other plugin spec
+                must either:
 
-                In these cases, a custom `name` can be used instead of `source`
-                and the plugin spec options given will be applied or merged with
-                the original plugin definition. This is particularly useful for
-                plugins that bundle multiple modules (e.g. mini-nvim, which
-                includes mini-ai, mini-trailspace, etc.), where you need to
-                modify options for individual modules without affecting the
-                entire bundle.
+                  - Have `source` defined, and explicitly reference the same
+                    `name` attribute.
+
+                    Example:
+
+                    ```
+                    {
+                      plugins.lazy.plugins = [
+                        {
+                          name = "nvim-org-mode";
+                        }
+                        {
+                          name = "nvim-org-mode";
+                          source = pkgs.vimPlugins.neorg;
+                        }
+                      ];
+                    }
+                    ```
+
+                  - Have `source` defined, and the given value to `source` is
+                    either a nix package whose package name is the same as the
+                    `name` attribute. Or have `source` set to a short/full git
+                    url whose basename is the same as `name` attribute.
+
+                    Example:
+
+                    ```
+                    {
+                      plugins.lazy.plugins = [
+                        {
+                          name = "nvim-treesitter";
+                        }
+                        {
+                          source = pkgs.vimPlugins.nvim-treesitter;
+                        }
+                      ];
+                    }
+                    ```
+
+                  - Be a nix package whose package name is the same as the
+                    `name` attribute.
+
+                    Example:
+
+                    ```
+                    {
+                      plugins.lazy.plugins = [
+                        {
+                          name = "nvim-treesitter";
+                        }
+                          pkgs.vimPlugins.nvim-treesitter
+                      ];
+                    }
+                    ```
               '';
 
               dev = defaultNullOpts.mkBool false ''
@@ -163,17 +221,20 @@ lib.nixvim.plugins.mkNeovimPlugin {
               '';
 
               enabled = defaultNullOpts.mkStrLuaFnOr bool true ''
-                When false or if a function that returns false is defined
+                When false or if a lua function that returns false is defined,
                 then this plugin will not be included in the final spec. The
                 plugin will also be uninstalled when true if the plugin is an
-                out of tree non nix package plugin. (accepts fun():boolean).
+                out of tree non nix package plugin.
+
+                If a lua function is given it should have a signature of
+                `fun():boolean`.
               '';
 
               cond = defaultNullOpts.mkStrLuaFnOr bool true ''
                 Behaves the same as `plugins.lazy.plugins.<plugin>.enabled`,
                 but won't uninstall the plugin when the condition is false.
                 Useful to disable some plugins in vscode, or firenvim for
-                example. 
+                example.
 
                 Note: Since out of tree non nix package plugins are only ever
                 uninstalled by `lazy.nvim`, this option as far as nix package
@@ -277,19 +338,19 @@ lib.nixvim.plugins.mkNeovimPlugin {
                   plugin loads. Dependencies are always lazy-loaded unless
                   specified otherwise. When specifying a name, make sure the
                   plugin spec has been defined somewhere else. (See:
-                  https://lazy.folke.io/spec). 
+                  `plugins.lazy.plugins.<plugin>.name` and https://lazy.folke.io/spec).
                 '';
 
               init = mkNullOrLuaFn ''
-                Functions that are always executed during startup. Mostly
-                useful for setting vim.g.* configuration used by Vim plugins
+                Lua functions that are always executed during startup. Mostly
+                useful for setting `vim.g.*` configuration used by Vim plugins
                 startup.
               '';
 
               config = mkNullOrStrLuaFnOr (enum [ true ]) ''
                 A lua function with signature `fun(LazyPlugin, opts:table)`
-                that gets executed when the plugin loads. It can also just be
-                a `true` boolean.
+                that gets executed when the plugin loads. It can also just be a
+                `true` boolean.
 
                 The default implementation will automatically run
                 `require(MAIN).setup(opts)` if
@@ -317,17 +378,19 @@ lib.nixvim.plugins.mkNeovimPlugin {
                 Lazy-load on event. Events can be specified as `BufEnter`, a
                 pattern like `BufEnter *.lua` or a list of events `event = [
                 "BufRead" "BufEnter" ];`. It can also be a lua function of
-                signature `fun(self:LazyPlugin, event:string[])` that returns a
-                list of strings.
+                signature `fun(self:LazyPlugin, event:string[]):string[]` that
+                returns a list of strings.
 
-                See https://neovim.io/doc/user/autocmd.html for a more info neovim events.
-                Also see upstream `lazy.nvim` docs at https://lazy.folke.io/spec
+                See https://neovim.io/doc/user/autocmd.html for a more info
+                neovim events. Also see upstream `lazy.nvim` docs at
+                https://lazy.folke.io/spec
               '';
 
               cmd = mkNullOrOption (maybeRaw (either str (listOf str))) ''
                 Lazy-load on command. Commands can be specified as a single
                 string like `StartupTime` or a list of strings to lazy load the
-                plugin on any given command. This can also be a lua function that
+                plugin on any given command. This can also be a lua function of
+                signature `fun(self:LazyPlugin, event:string[]):string[]` that
                 returns a list of strings.
 
                 Example:
@@ -379,7 +442,6 @@ lib.nixvim.plugins.mkNeovimPlugin {
                 ```
               '';
 
-              # TODO: add better description here
               keys = mkNullOrOption (listOf (
                 keymaps.mkMapOptionSubmodule {
                   defaults = {
@@ -466,7 +528,116 @@ lib.nixvim.plugins.mkNeovimPlugin {
       plugins = lib.mkOption {
         type = lazyPluginsListType;
         default = [ ];
-        description = "List of plugins";
+        # Add tests for this
+        description = ''
+          List of plugin specs. Each element in the list can either be a nix
+          package, directory path, short git URL, or a full git URL. In
+          addition to this each element in the list can also be attribute set
+          (See `plugins.lazy.plugins.<plugin>.*` for more info on what these
+          attributes can be).
+
+          Example:
+
+          ```Nix
+          {
+            plugins.lazy.plugins =
+              with pkgs.vimPlugins;
+              [
+                "echasnovski/mini.ai"
+                "https://github.com/echasnovski/mini.icons"
+                {
+                  source = nvim-lspconfig;
+                  dependencies = conform-nvim;
+                  opts = {
+                    servers = {
+                      nixd = {
+                        autostart = true;
+                      };
+                      nil_ls = {
+                        autostart = true;
+                      };
+                      ts_ls = {
+                        autostart = true;
+                      };
+                      angularls = {
+                        autostart = true;
+                      };
+                    };
+                  };
+                }
+                {
+                  source = conform-nvim;
+                  opts = {
+                    formatters_by_ft = {
+                      nix = [ "nixfmt" ];
+                    };
+                  };
+                }
+                {
+                  source = telescope-nvim;
+                  dependencies = telescope-fzf-native-nvim;
+                }
+                {
+                  source = "nvim-treesitter/nvim-treesitter";
+                  opts = {
+                    highlight = {
+                      enable = true;
+                    };
+                    ensure_installed = [
+                      "vim"
+                      "regex"
+                      "lua"
+                      "bash"
+                      "markdown"
+                      "angular"
+                      "markdown_inline"
+                      "hyprlang"
+                    ];
+                    parser_install_dir.__raw = "vim.fs.joinpath(vim.fn.stdpath('data'), 'site')";
+                  };
+                }
+                {
+                  source = nvim-treesitter-textobjects;
+                  dependencies = nvim-treesitter;
+                }
+                {
+                  source = mason-nvim;
+                  enabled = false;
+                }
+                {
+                  source = mason-lspconfig-nvim;
+                  enabled = false;
+                }
+                grug-far-nvim
+                bufferline-nvim
+                catppuccin-nvim
+                cmp-buffer
+                {
+                  source = snacks-nvim;
+                  opts = {
+                    scroll = {
+                      enabled = false;
+                    };
+                  };
+                }
+                fzf-lua
+              ]
+              ++
+                lib.map
+                  (mini-module: {
+                    name = "${mini-module}";
+                    source = mini-nvim;
+                  })
+                  [
+                    "mini.move"
+                    "mini.pairs"
+                    "mini.splitjoin"
+                    "mini.trailspace"
+                  ];
+          }
+          ```
+
+        '';
       };
     };
 
